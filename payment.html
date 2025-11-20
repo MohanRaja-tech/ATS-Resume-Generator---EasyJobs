@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - EasyJobs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8F9FA;
+            min-height: 100vh;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background-color: #FFFFFF;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-menu li a {
+            color: #666666;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu li a:hover,
+        .nav-menu li a.active {
+            color: #0079EC;
+        }
+        /* Banner Section */
+        .pricing-banner {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            padding: 35px 50px;
+            position: relative;
+            overflow: hidden;
+            min-height: 160px;
+        }
+
+        /* Coin Decorations for Banner */
+        .banner-coin {
+            position: absolute;
+            background-image: url('assets/images/coin.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .banner-coin-1 { top: 60px; left: 470px; width: 120px; height: 120px; z-index: 5; }
+        .banner-coin-2 { top: 0px; left: 250px; width: 120px; height: 120px; z-index: 1; }
+        .banner-coin-3 { top: 20px; right: 380px; width: 120px; height: 120px; z-index: 5; }
+        .banner-coin-4 { top: 100px; right: 300px; width: 120px; height: 120px; z-index: 1; }
+        .banner-coin-5 { top: -30px; left: 60px; width: 120px; height: 120px; }
+        .banner-coin-6 { top: 150px; right: 80px; width: 120px; height: 120px; }
+        .banner-coin-7 { bottom: 150px; right: 150px; width: 120px; height: 120px; }
+        .banner-coin-8 { bottom: 2px; left: 150px; width: 120px; height: 120px; }
+
+        .banner-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .current-balance-section {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .current-balance-section h3 {
+            color: #666666;
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        .current-balance-section h1 {
+            color: #333333;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .credit-info-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: #E3F2FD;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #1976D2;
+            font-weight: 500;
+        }
+
+        .credit-info-row .coin-icon {
+            width: 16px;
+            height: 16px;
+            background-image: url('assets/images/coin.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Unlock Section */
+        .unlock-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .unlock-section h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #000000;
+        }
+
+        .unlock-section p {
+            color: #666666;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Toggle Switch */
+        .billing-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .billing-toggle span {
+            font-weight: 500;
+            color: #000000;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #E5E7EB;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #0066FF;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(24px);
+        }
+
+        .save-badge {
+            color: #0066FF;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        /* Pricing Cards */
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card.popular {
+            background: #0066FF;
+            border-color: #0066FF;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            color: #0066FF;
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .plan-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-description {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-price {
+            display: flex;
+            align-items: baseline;
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .currency {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .period {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .credits-info {
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+
+        .credits-detail {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-card.popular .credits-detail {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .select-plan-btn {
+            width: 100%;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-card:not(.popular) .select-plan-btn {
+            background: white;
+            border: 2px solid #000000;
+            color: #000000;
+        }
+
+        .pricing-card:not(.popular) .select-plan-btn:hover {
+            background: #000000;
+            color: white;
+        }
+
+        .pricing-card.popular .select-plan-btn {
+            background: #000000;
+            color: white;
+        }
+
+        .pricing-card.popular .select-plan-btn:hover {
+            background: #1a1a1a;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.875rem;
+            font-size: 0.95rem;
+        }
+
+        .check-icon {
+            color: #10B981;
+            font-size: 1.1rem;
+        }
+
+        .pricing-card.popular .check-icon {
+            color: white;
+        }
+
+        .features-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            opacity: 0.7;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin-top: 4rem;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .faq-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .faq-header p {
+            color: #666666;
+            font-size: 1rem;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #F9FAFB;
+        }
+
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            background: #000000;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.25rem;
+            color: #666666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-container {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+
+            .nav-container.active {
+                display: flex;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .pricing-banner {
+                padding: 20px 15px;
+            }
+
+            .current-balance-section {
+                padding: 15px 20px;
+            }
+
+            .current-balance-section h1 {
+                font-size: 28px;
+            }
+
+            .banner-coin {
+                transform: scale(0.6);
+            }
+
+            .banner-coin-1 { left: 200px; }
+            .banner-coin-2 { left: 170px; }
+            .banner-coin-3 { right: 200px; }
+            .banner-coin-4 { right: 170px; }
+
+            .banner-coin-1, .banner-coin-2, .banner-coin-3, .banner-coin-4 {
+                display: block;
+            }
+
+            .banner-coin-5, .banner-coin-6, .banner-coin-7, .banner-coin-8 {
+                display: none;
+            }
+
+            .banner-content h1 {
+                font-size: 2rem;
+            }
+
+            .pricing-container {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+
+            .main-content {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="assets/images/logo.png" alt="EasyJobs Logo" style="height: 50px; width: auto;">
+        </a>
+        <ul class="nav-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="payment.html" class="active">Pricing</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="#" id="logoutBtn">Log Out</a></li>
+        </ul>
+    </nav>
+
+    <!-- Banner Section with Credits -->
+    <section class="pricing-banner">
+        <!-- Banner Coins -->
+        <div class="banner-coin banner-coin-1"></div>
+        <div class="banner-coin banner-coin-2"></div>
+        <div class="banner-coin banner-coin-3"></div>
+        <div class="banner-coin banner-coin-4"></div>
+        <div class="banner-coin banner-coin-5"></div>
+        <div class="banner-coin banner-coin-6"></div>
+        <div class="banner-coin banner-coin-7"></div>
+        <div class="banner-coin banner-coin-8"></div>
+        
+        <div class="banner-content">
+            <div class="current-balance-section">
+                <h3>Current Balance</h3>
+                <h1>5 Credits</h1>
+                <div class="credit-info-row">
+                    <div class="coin-icon"></div>
+                    <span>Each credit generates one optimized resume</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Unlock Section -->
+        <section class="unlock-section">
+            <h2>Unlock Full Access</h2>
+            <p>Choose a plan that works best for you.</p>
+
+            <!-- Billing Toggle -->
+            <div class="billing-toggle">
+                <span>Monthly</span>
+                <div class="toggle-switch" id="billingToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+                <span>Yearly</span>
+                <span class="save-badge">SAVE 20%</span>
+            </div>
+        </section>
+
+        <!-- Pricing Cards -->
+        <section class="pricing-container">
+            <!-- Starter Plan -->
+            <div class="pricing-card">
+                <h3 class="plan-name">Starter</h3>
+                <p class="plan-description">Perfect for job seekers.</p>
+                <div class="plan-price">
+                    <span class="currency">₹</span>
+                    <span class="price">99</span>
+                    <span class="period">/month</span>
+                </div>
+                <p class="credits-info">5 Credits</p>
+                <p class="credits-detail">xyz for one resume</p>
+                <button class="select-plan-btn">Select Plan</button>
+                <p class="features-title">Includes:</p>
+                <ul class="features-list">
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>5 Resume Generations</span>
+                    </li>
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>ATS Optimization</span>
+                    </li>
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>Keyword Alignment</span>
+                    </li>
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>PDF Download</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Professional Plan (Popular) -->
+            <div class="pricing-card popular">
+                <div class="popular-badge">Popular</div>
+                <h3 class="plan-name">Professional</h3>
+                <p class="plan-description">Perfect for job seekers.</p>
+                <div class="plan-price">
+                    <span class="currency">₹</span>
+                    <span class="price">99</span>
+                    <span class="period">/month</span>
+                </div>
+                <p class="credits-info">5 Credits</p>
+                <p class="credits-detail">xyz for one resume (save 17%)</p>
+                <button class="select-plan-btn">Select Plan</button>
+                <p class="features-title">Includes:</p>
+                <ul class="features-list">
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>5 Resume Generations</span>
+                    </li>
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>ATS Optimization</span>
+                    </li>
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>Keyword Alignment</span>
+                    </li>
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>PDF Download</span>
+                    </li>
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>PDF Download</span>
+                    </li>
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>PDF Download</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Premium Plan -->
+            <div class="pricing-card">
+                <h3 class="plan-name">Premium</h3>
+                <p class="plan-description">Perfect for job seekers.</p>
+                <div class="plan-price">
+                    <span class="currency">₹</span>
+                    <span class="price">99</span>
+                    <span class="period">/month</span>
+                </div>
+                <p class="credits-info">5 Credits</p>
+                <p class="credits-detail">xyz for one resume</p>
+                <button class="select-plan-btn">Select Plan</button>
+                <p class="features-title">Includes:</p>
+                <ul class="features-list">
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>5 Resume Generations</span>
+                    </li>
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>ATS Optimization</span>
+                    </li>
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>Keyword Alignment</span>
+                    </li>
+                    <li class="feature-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span>PDF Download</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="faq-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Explore our FAQ section to find answers to commonly asked questions about our platform.</p>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do credits work?</span>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">
+                    Each credit allows you to generate one optimized resume. Credits are deducted from your account when you successfully generate a resume. You can purchase more credits anytime.
+                </div>
+            </div>
+
+            <div class="faq-item active">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do credits work?</span>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">
+                    Explore our FAQ section to find answers to commonly asked questions about our platform. Explore our FAQ section to find answers to commonly asked questions about our platform. Explore our FAQ section to find answers to commonly asked questions about our platform.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do credits work?</span>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">
+                    Each credit allows you to generate one optimized resume. Credits are deducted from your account when you successfully generate a resume.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do credits work?</span>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">
+                    Each credit allows you to generate one optimized resume. Credits are deducted from your account when you successfully generate a resume.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do credits work?</span>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">
+                    Each credit allows you to generate one optimized resume. Credits are deducted from your account when you successfully generate a resume.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Billing Toggle
+        const billingToggle = document.getElementById('billingToggle');
+        billingToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+
+        // FAQ Toggle
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const allItems = document.querySelectorAll('.faq-item');
+            
+            allItems.forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            faqItem.classList.toggle('active');
+        }
+    </script>
+    <script src="js/payment.js"></script>
+</body>
+</html>

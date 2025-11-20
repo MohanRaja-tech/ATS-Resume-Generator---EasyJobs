@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyJobs - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8F9FA;
+            min-height: 100vh;
+        }
+
+        /* Alert System */
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .alert.show {
+            transform: translateX(0);
+        }
+
+        .alert-success {
+            background-color: #4CAF50;
+        }
+
+        .alert-error {
+            background-color: #f44336;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .loading-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0079EC;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background-color: #FFFFFF;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-menu li a {
+            color: #666666;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu li a:hover,
+        .nav-menu li a.active {
+            color: #0079EC;
+        }
+
+        /* Header Section */
+        .header-section {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            flex: 1;
+        }
+
+        .welcome-text {
+            color: #666666;
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .user-name {
+            color: #333333;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .transform-text {
+            background-color: #2196F3;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .stats-left {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .stat-box {
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            padding: 16px 20px;
+            text-align: left;
+            backdrop-filter: blur(10px);
+            min-width: 160px;
+        }
+
+        .stat-label {
+            color: #888888;
+            font-size: 13px;
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+
+        .stat-number {
+            color: #333333;
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .balance-section {
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            padding: 16px 20px;
+            text-align: left;
+            backdrop-filter: blur(10px);
+            min-width: 160px;
+        }
+
+        .balance-label {
+            color: #888888;
+            font-size: 13px;
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+
+        .balance-amount {
+            color: #333333;
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 25px 40px 40px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .upload-instruction {
+            text-align: center;
+            color: #888888;
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .main-title {
+            text-align: center;
+            color: #333333;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .upload-box,
+        .job-description-box {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            color: #666666;
+        }
+
+        .section-title {
+            color: #333333;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .section-subtitle {
+            color: #888888;
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 2px dashed #DDDDDD;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover,
+        .upload-area.dragover {
+            border-color: #2196F3;
+            background-color: #f0f8ff;
+        }
+
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            color: #CCCCCC;
+            margin: 0 auto 16px;
+        }
+
+        .upload-text {
+            color: #666666;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .upload-formats {
+            color: #AAAAAA;
+            font-size: 12px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .browse-btn {
+            background-color: #F5F5F5;
+            color: #666666;
+            border: 1px solid #DDDDDD;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .browse-btn:hover {
+            background-color: #EEEEEE;
+        }
+
+        /* File Items */
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #F8F9FA;
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .file-icon {
+            background-color: #FF4444;
+            color: #FFFFFF;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .file-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .file-name {
+            color: #333333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .file-size {
+            color: #888888;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .file-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #888888;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-uploading .status-dot {
+            background-color: #2196F3;
+        }
+
+        .status-completed .status-dot {
+            background-color: #4CAF50;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: #E0E0E0;
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #2196F3;
+            width: 60%;
+            transition: width 0.3s ease;
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #CCCCCC;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            color: #FF4444;
+        }
+
+        /* Job Description Section */
+        .job-description-textarea {
+            width: 100%;
+            min-height: 200px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .job-description-textarea:focus {
+            border-color: #2196F3;
+        }
+
+        .job-description-textarea::placeholder {
+            color: #AAAAAA;
+        }
+
+        /* Pro Tip Box */
+        .pro-tip {
+            background-color: #FFF9C4;
+            border-left: 4px solid #FFD54F;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+
+        .pro-tip-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .pro-tip-icon {
+            color: #FF9800;
+            font-size: 16px;
+        }
+
+        .pro-tip-title {
+            color: #FF8F00;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .pro-tip-text {
+            color: #F57C00;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        /* Generate Button */
+        .generate-button-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .generate-btn {
+            background-color: #333333;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 30px;
+            padding: 14px 28px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: auto;
+        }
+
+        .generate-btn:hover {
+            background-color: #555555;
+            transform: translateY(-2px);
+        }
+
+        .generate-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .generate-text {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .credits-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .coin-icon {
+            width: 18px;
+            height: 18px;
+            background-image: url('assets/images/coin.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .credits-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Recent Resumes Section */
+        .recent-resumes-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+
+        .recent-resumes-title {
+            color: #333333;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .resumes-table {
+            width: 100%;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 2px solid #E0E0E0;
+            margin-bottom: 16px;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 1px solid #F0F0F0;
+            transition: background-color 0.3s ease;
+        }
+
+        .table-row:hover {
+            background-color: #F8F9FA;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-cell {
+            color: #888888;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table-header .table-cell {
+            color: #666666;
+            font-weight: 600;
+        }
+
+        /* Badge styles */
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .badge-success {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Download button */
+        .btn-primary {
+            background-color: #0079EC;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0066CC;
+        }
+
+        /* Success Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-content h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        /* Hide file inputs */
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-menu {
+                gap: 20px;
+            }
+
+            .header-section {
+                padding: 10px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+            }
+
+            .stats-left {
+                gap: 12px;
+                width: 100%;
+            }
+
+            .stat-box,
+            .balance-section {
+                min-width: auto;
+                text-align: left;
+            }
+
+            .upload-section {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .main-content {
+                padding: 15px 20px 20px 20px;
+            }
+
+            .user-name {
+                font-size: 28px;
+            }
+
+            .main-title {
+                font-size: 28px;
+            }
+
+            .generate-button-container {
+                margin: 30px 0;
+            }
+
+            .generate-btn {
+                padding: 12px 24px;
+                font-size: 14px;
+                gap: 10px;
+            }
+
+            .generate-text {
+                font-size: 14px;
+            }
+
+            .coin-icon {
+                width: 16px;
+                height: 16px;
+            }
+
+            .credits-text {
+                font-size: 12px;
+            }
+
+            .recent-resumes-section {
+                padding: 20px;
+                margin-top: 30px;
+            }
+
+            .recent-resumes-title {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .table-header,
+            .table-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .table-cell {
+                font-size: 12px;
+                padding: 8px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Alert System -->
+    <div id="alert" class="alert"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="assets/images/logo.png" alt="EasyJobs Logo" style="height: 50px; width: auto;">
+        </a>
+        <ul class="nav-menu">
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="payment.html">Pricing</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="#" id="logoutBtn">Log Out</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="header-section">
+        <div class="header-left">
+            <p class="welcome-text">Welcome Back!</p>
+            <h1 class="user-name" id="userName">User Name</h1>
+            <div class="transform-text">Transform your Resume with AI-Powered ATS Optimization</div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stats-left">
+                <div class="stat-box">
+                    <div class="stat-label">Resumes Generated:</div>
+                    <div class="stat-number" id="resumesGenerated">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Credits Used:</div>
+                    <div class="stat-number" id="creditsUsed">0</div>
+                </div>
+            </div>
+            <div class="balance-section">
+                <div class="balance-label">Current Balance:</div>
+                <div class="balance-amount"><span id="creditsRemaining">5</span> Credits</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <p class="upload-instruction">Upload your resume and add a job description for better keyword alignment.</p>
+        <h2 class="main-title">Generate your ATS - Optimized Resume</h2>
+
+        <form id="uploadForm">
+            <div class="upload-section">
+                <!-- Upload Files Section -->
+                <div class="upload-box">
+                    <div class="section-header">
+                        <svg class="section-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="section-title">Upload files</span>
+                    </div>
+                    <p class="section-subtitle">Select and upload your resume file</p>
+
+                    <div class="upload-area" id="resumeUploadArea">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <p class="upload-text">Choose a file or drag & drop it here</p>
+                        <p class="upload-formats">PDF, DOC, DOCX formats, up to 10MB</p>
+                        <input type="file" id="resumeFile" accept=".pdf,.doc,.docx">
+                        <button type="button" class="browse-btn" onclick="document.getElementById('resumeFile').click()">Browse File</button>
+                    </div>
+
+                    <div class="file-list" id="fileList">
+                        <!-- File info will appear here -->
+                        <div id="resumeFileInfo" class="file-item" style="display: none;">
+                            <div class="file-info">
+                                <div class="file-icon">PDF</div>
+                                <div class="file-details">
+                                    <span class="file-name" id="resumeFileName">Resume.pdf</span>
+                                    <div class="file-status status-completed">
+                                        <span class="status-dot"></span>
+                                        <span>Ready</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="delete-btn" onclick="clearResumeFile()">✕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Description Section -->
+                <div class="job-description-box">
+                    <div class="section-header">
+                        <svg class="section-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="section-title">Job Description</span>
+                    </div>
+                    <p class="section-subtitle">Optional (Recommended)</p>
+
+                    <textarea class="job-description-textarea" id="jobDescText" placeholder="Paste the job description here..."></textarea>
+
+                    <div class="pro-tip">
+                        <div class="pro-tip-header">
+                            <span class="pro-tip-icon">💡</span>
+                            <span class="pro-tip-title">Pro Tip:</span>
+                        </div>
+                        <p class="pro-tip-text">Paste the job description to optimize your resume with relevant keywords.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generate Button -->
+            <div class="generate-button-container">
+                <button type="submit" class="generate-btn" id="generateBtn">
+                    <span class="generate-text">Generate</span>
+                    <div class="credits-row">
+                        <div class="coin-icon"></div>
+                        <span class="credits-text">1 Credit</span>
+                    </div>
+                </button>
+            </div>
+        </form>
+
+        <!-- Recent Resumes Section -->
+        <div class="recent-resumes-section">
+            <h3 class="recent-resumes-title">Recent Resumes</h3>
+            <div class="resumes-table">
+                <div class="table-header">
+                    <div class="table-cell">DATE</div>
+                    <div class="table-cell">ORIGINAL FILE</div>
+                    <div class="table-cell">STATUS</div>
+                    <div class="table-cell">OPTIMIZED RESUME</div>
+                </div>
+                <tbody id="recentResumesTable">
+                    <!-- Dynamic content will be loaded here -->
+                </tbody>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h3>🎉 Resume Generated Successfully!</h3>
+            <p>Your ATS-optimized resume is ready for download.</p>
+            <div class="modal-buttons">
+                <button id="downloadBtn" class="btn btn-primary">Download Resume</button>
+                <button onclick="closeSuccessModal()" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
+```

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyJobs - Landing Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #1E88E5 0%, #64B5F6 30%, #90CAF9 50%, #BBDEFB 70%, #E3F2FD 85%, #FFFFFF 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-menu li a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-menu li a:hover {
+            opacity: 0.8;
+        }
+
+        .login-btn {
+            border: 2px solid #FFFFFF;
+            border-radius: 25px;
+            padding: 10px 25px;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: #FFFFFF;
+            color: #0079EC;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 120px);
+            padding: 20px 40px 60px 40px;
+            text-align: center;
+            margin-top: -40px;
+        }
+
+        .hero-section {
+            /* Frame 39 auto layout */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0px;
+            gap: 16px;
+            
+            position: relative;
+            width: 1098px;
+            max-width: 90vw;
+            height: auto;
+        }
+
+        .hero-title {
+            /* Land your dream job with AI powered resume optimization */
+            width: 100%;
+            max-width: 1098px;
+            height: auto;
+            
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 52px;
+            line-height: 78px;
+            text-align: center;
+            text-transform: capitalize;
+            
+            color: #FFFFFF;
+            margin-bottom: 0;
+            
+            /* Inside auto layout */
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+        }
+
+        .hero-description {
+            /* Transform your resume description */
+            width: 100%;
+            max-width: 1098px;
+            height: auto;
+            
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 22px;
+            line-height: 33px;
+            text-align: center;
+            
+            color: #FFFFFF;
+            margin-bottom: 40px;
+            
+            /* Inside auto layout */
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+        }
+
+        .cta-button {
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #333333;
+            transform: translateY(-2px);
+        }
+
+        .cta-button::after {
+            content: "→";
+            font-size: 1.2rem;
+        }
+
+        /* Why Choose Us Section */
+        .why-choose-wrapper {
+            padding: 0px 60px 60px 60px;
+            margin-top: -100px;
+        }
+
+        .why-choose-section {
+            background: #FFFFFF;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            border-radius: 16px;
+            max-width: 1150px;
+            margin: 0 auto;
+            box-shadow: 0px 8px 32px rgba(30, 136, 229, 0.15);
+            border: 3px solid rgba(100, 181, 246, 0.3);
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 36px;
+            line-height: 54px;
+            text-align: center;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 27px;
+            text-align: center;
+            color: #666666;
+            max-width: 600px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .feature-card {
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card:hover {
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #FFFFFF;
+        }
+
+        .feature-card:nth-child(1) .feature-icon {
+            background: linear-gradient(135deg, #FF6EC7 0%, #FF8ED4 100%);
+        }
+
+        .feature-card:nth-child(2) .feature-icon {
+            background: linear-gradient(135deg, #FDB755 0%, #FDC96A 100%);
+        }
+
+        .feature-card:nth-child(3) .feature-icon {
+            background: linear-gradient(135deg, #4A9FF5 0%, #6BB3F7 100%);
+        }
+
+        .feature-card:nth-child(4) .feature-icon {
+            background: linear-gradient(135deg, #5DD682 0%, #7DE49A 100%);
+        }
+
+        .feature-card:nth-child(5) .feature-icon {
+            background: linear-gradient(135deg, #A855F7 0%, #BA6FF9 100%);
+        }
+
+        .feature-card:nth-child(6) .feature-icon {
+            background: linear-gradient(135deg, #FF7A59 0%, #FF9475 100%);
+        }
+
+        .feature-title {
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 30px;
+            color: #000000;
+        }
+
+        .feature-description {
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            color: #666666;
+        }
+
+        /* How It Works Section */
+        .how-it-works-wrapper {
+            padding: 60px 60px 80px 60px;
+            background: transparent;
+        }
+
+        .how-it-works-section {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+            position: relative;
+        }
+
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            width: 100%;
+            position: relative;
+        }
+
+        .steps-container .step:nth-child(3) {
+            grid-column: 1 / -1;
+            max-width: 50%;
+            margin: 0 auto;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            position: relative;
+            box-shadow: 0px 4px 16px rgba(30, 136, 229, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            box-shadow: 0px 8px 24px rgba(30, 136, 229, 0.2);
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: #E3F2FD;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1976D2;
+            margin-bottom: 8px;
+        }
+
+        .step-decorator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            opacity: 0.8;
+        }
+
+        .star-icon {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        .step-title {
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 30px;
+            text-align: left;
+            color: #000000;
+        }
+
+        .step-description {
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            text-align: left;
+            color: #666666;
+        }
+
+        /* Footer Section */
+        .footer-section {
+            background: rgba(230, 243, 255, 1);
+            padding: 40px 40px;
+            border-top: 2px solid rgba(0, 121, 236, 0.2);
+            box-shadow: 0px -4px 20px rgba(0, 121, 236, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        .footer-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .footer-text {
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #333333;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+
+        .footer-highlight {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 24px;
+            color: #0079EC;
+            margin-top: 20px;
+        }
+
+        .footer-highlight::before {
+            content: "✓";
+            width: 24px;
+            height: 24px;
+            background: #0079EC;
+            color: #FFFFFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .footer-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-width: 200px;
+        }
+
+        .footer-btn-primary {
+            background: #000000;
+            color: #FFFFFF;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .footer-btn-primary:hover {
+            background: #333333;
+            transform: translateY(-2px);
+        }
+
+        .footer-btn-secondary {
+            background: #FFFFFF;
+            color: #000000;
+            padding: 12px 30px;
+            border: 2px solid #000000;
+            border-radius: 25px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .footer-btn-secondary:hover {
+            background: #000000;
+            color: #FFFFFF;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-menu {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-section {
+                width: 100%;
+                max-width: 95vw;
+            }
+
+            .hero-title {
+                font-size: 32px;
+                line-height: 48px;
+            }
+
+            .hero-description {
+                font-size: 18px;
+                line-height: 27px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .steps-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .steps-container .step:nth-child(3) {
+                max-width: 100%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .footer-buttons {
+                width: 100%;
+            }
+
+            .footer-btn-primary,
+            .footer-btn-secondary {
+                width: 100%;
+            }
+
+            .section-title {
+                font-size: 28px;
+                line-height: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="assets/images/logo.png" alt="EasyJobs">
+        </a>
+        <ul class="nav-menu">
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="#login" class="login-btn">Log In</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">
+                Land Your Dream Job With AI Powered Resume Optimization
+            </h1>
+            <p class="hero-description">
+                Transform your resume into an ATS-friendly marketplace in minutes. Get past applicant tracking systems and into the interview room.
+            </p>
+            <a href="register.html" class="cta-button">Get Started for Free</a>
+        </section>
+    </main>
+
+    <!-- Why Choose Us Section -->
+    <div class="why-choose-wrapper">
+        <section class="why-choose-section">
+            <div>
+                <h2 class="section-title">Why Choose Us?</h2>
+                <p class="section-subtitle">Powerful features that help you stand out from the competition.</p>
+            </div>
+            
+            <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                <h3 class="feature-title">AI-Powered Optimization</h3>
+                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                <h3 class="feature-title">AI-Powered Optimization</h3>
+                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                <h3 class="feature-title">AI-Powered Optimization</h3>
+                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                <h3 class="feature-title">AI-Powered Optimization</h3>
+                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                <h3 class="feature-title">AI-Powered Optimization</h3>
+                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                <h3 class="feature-title">AI-Powered Optimization</h3>
+                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
+            </div>
+        </div>
+        </section>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="how-it-works-wrapper">
+        <section class="how-it-works-section">
+            <div>
+                <h2 class="section-title">How It Works?</h2>
+            <p class="section-subtitle">Get your ATS-friendly resume in 3 Steps</p>
+        </div>
+        
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-decorator">
+                    <svg class="star-icon" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Main 4-point star shape -->
+                        <path d="M70 5 C70 5, 76 50, 82 62 C88 68, 135 70, 135 70 C135 70, 88 72, 82 78 C76 90, 70 135, 70 135 C70 135, 64 90, 58 78 C52 72, 5 70, 5 70 C5 70, 52 68, 58 62 C64 50, 70 5, 70 5 Z" fill="#64B5F6" opacity="0.75"/>
+                        <!-- Small 4-point star at bottom left -->
+                        <path d="M30 105 C30 105, 31 100, 33 98 C35 96, 40 95, 40 95 C40 95, 35 94, 33 92 C31 90, 30 85, 30 85 C30 85, 29 90, 27 92 C25 94, 20 95, 20 95 C20 95, 25 96, 27 98 C29 100, 30 105, 30 105 Z" fill="#42A5F5" opacity="0.8"/>
+                    </svg>
+                </div>
+                <h3 class="step-title">Upload Your Resume</h3>
+                <p class="step-description">Upload your current resume in PDF, DOC, or DOCX format instantly.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-decorator">
+                    <svg class="star-icon" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Main 4-point star shape -->
+                        <path d="M70 5 C70 5, 76 50, 82 62 C88 68, 135 70, 135 70 C135 70, 88 72, 82 78 C76 90, 70 135, 70 135 C70 135, 64 90, 58 78 C52 72, 5 70, 5 70 C5 70, 52 68, 58 62 C64 50, 70 5, 70 5 Z" fill="#64B5F6" opacity="0.75"/>
+                        <!-- Small 4-point star at bottom left -->
+                        <path d="M30 105 C30 105, 31 100, 33 98 C35 96, 40 95, 40 95 C40 95, 35 94, 33 92 C31 90, 30 85, 30 85 C30 85, 29 90, 27 92 C25 94, 20 95, 20 95 C20 95, 25 96, 27 98 C29 100, 30 105, 30 105 Z" fill="#42A5F5" opacity="0.8"/>
+                    </svg>
+                </div>
+                <h3 class="step-title">Add Job Description</h3>
+                <p class="step-description">Upload your current resume in PDF, DOC, or DOCX format instantly.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-decorator">
+                    <svg class="star-icon" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Main 4-point star shape -->
+                        <path d="M70 5 C70 5, 76 50, 82 62 C88 68, 135 70, 135 70 C135 70, 88 72, 82 78 C76 90, 70 135, 70 135 C70 135, 64 90, 58 78 C52 72, 5 70, 5 70 C5 70, 52 68, 58 62 C64 50, 70 5, 70 5 Z" fill="#64B5F6" opacity="0.75"/>
+                        <!-- Small 4-point star at bottom left -->
+                        <path d="M30 105 C30 105, 31 100, 33 98 C35 96, 40 95, 40 95 C40 95, 35 94, 33 92 C31 90, 30 85, 30 85 C30 85, 29 90, 27 92 C25 94, 20 95, 20 95 C20 95, 25 96, 27 98 C29 100, 30 105, 30 105 Z" fill="#42A5F5" opacity="0.8"/>
+                    </svg>
+                </div>
+                <h3 class="step-title">Apply & Download</h3>
+                <p class="step-description">Upload your current resume in PDF, DOC, or DOCX format instantly.</p>
+            </div>
+        </div>
+        </section>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer-section">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="footer-logo">
+                    <img src="assets/images/logo.png" alt="EasyJobs">
+                </div>
+                <p class="footer-text">
+                    Ready to Land Your Dream Job?<br>
+                    Join 100+ job seekers who have successfully optimized their resumes and landed interviews.
+                </p>
+                <div class="footer-highlight">
+                    Get 3 free credits when you sign up today.
+                </div>
+            </div>
+            <div class="footer-buttons">
+                <a href="register.html" class="footer-btn-primary">Create Free Account</a>
+                <a href="payment.html" class="footer-btn-secondary">View Pricing</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
