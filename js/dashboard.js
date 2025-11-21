@@ -6,15 +6,15 @@ function checkAuth() {
     try {
         const isLoggedIn = localStorage.getItem('isLoggedIn');
         const authToken = localStorage.getItem('authToken');
-        
+
         console.log('🔍 Auth Check:', { isLoggedIn, hasToken: !!authToken });
-        
+
         if (!isLoggedIn || isLoggedIn !== 'true' || !authToken) {
             console.log('❌ Authentication failed - redirecting to login');
             window.location.href = 'index.html';
             return false;
         }
-        
+
         // Validate token format
         if (!authToken.includes('.')) {
             console.log('❌ Invalid token format - clearing auth');
@@ -24,7 +24,7 @@ function checkAuth() {
             window.location.href = 'index.html';
             return false;
         }
-        
+
         // Set demo data if not exists (for migration from old system)
         if (!localStorage.getItem('userData')) {
             const demoUserData = {
@@ -37,7 +37,17 @@ function checkAuth() {
             };
             localStorage.setItem('userData', JSON.stringify(demoUserData));
         }
-        
+
+        // Set auth flags if not exists  
+        if (!localStorage.getItem('authToken')) {
+            // Create a simple demo token (matches backend demo support)
+            const demoToken = btoa(JSON.stringify({
+                user_id: 'demo_user_12345',
+                email: 'demo@easyjobs.com'
+            }));
+            localStorage.setItem('authToken', demoToken);
+        }
+
         console.log('✅ Authentication validated');
         return true;
     } catch (error) {
@@ -54,18 +64,18 @@ checkAuth();
 function loadUserData() {
     try {
         const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-        
+
         // Safety checks for DOM elements
         const userNameEl = document.getElementById('userName');
         const creditsRemainingEl = document.getElementById('creditsRemaining');
         const resumesGeneratedEl = document.getElementById('resumesGenerated');
         const creditsUsedEl = document.getElementById('creditsUsed');
-        
+
         if (userNameEl) userNameEl.textContent = userData.name || 'User';
         if (creditsRemainingEl) creditsRemainingEl.textContent = userData.credits || 0;
         if (resumesGeneratedEl) resumesGeneratedEl.textContent = userData.resumesGenerated || 0;
         if (creditsUsedEl) creditsUsedEl.textContent = userData.creditsUsed || 0;
-        
+
         // Load resume history
         loadResumeHistory();
     } catch (error) {
@@ -129,23 +139,23 @@ resumeUploadArea.addEventListener('click', (e) => {
 
 function handleResumeFile(file) {
     if (!file) return;
-    
+
     // Validate file type
     const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
     if (!validTypes.includes(file.type)) {
         showAlert('Please upload a PDF or Word document', 'error');
         return;
     }
-    
+
     // Validate file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
         showAlert('File size must be less than 10MB', 'error');
         return;
     }
-    
+
     resumeFile = file;
     document.getElementById('resumeFileName').textContent = file.name;
-    
+
     // Update file icon based on file type
     const fileIcon = document.querySelector('#resumeFileInfo .file-icon');
     if (file.type.includes('pdf')) {
@@ -155,7 +165,7 @@ function handleResumeFile(file) {
         fileIcon.textContent = 'DOC';
         fileIcon.style.backgroundColor = '#2196F3';
     }
-    
+
     document.getElementById('resumeFileInfo').style.display = 'flex';
 }
 
@@ -169,13 +179,13 @@ function clearResumeFile() {
 const uploadForm = document.getElementById('uploadForm');
 uploadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     // Check if resume file is uploaded
     if (!resumeFile) {
         showAlert('Please upload your resume', 'error');
         return;
     }
-    
+
     // Check credits
     const userData = JSON.parse(localStorage.getItem('userData') || '{}');
     if (!userData.credits || userData.credits < 1) {
@@ -185,29 +195,29 @@ uploadForm.addEventListener('submit', async (e) => {
         }, 2000);
         return;
     }
-    
+
     // Get job description text
     const jobDescText = document.getElementById('jobDescText').value.trim();
-    
+
     // Show loading
     toggleLoading(true);
-    
+
     try {
         // Validate authentication before making request
         const authToken = localStorage.getItem('authToken');
         if (!authToken) {
             throw new Error('Authentication token not found. Please log in again.');
         }
-        
+
         console.log('🔐 Using auth token:', authToken.substring(0, 20) + '...');
-        
+
         // Create FormData for file upload
         const formData = new FormData();
         formData.append('resumeFile', resumeFile);
         formData.append('jobDescription', jobDescText);
-        
+
         console.log('📤 Sending request to /api/resume/process...');
-        
+
         // Call backend API for text extraction
         const response = await fetch('/api/resume/process', {
             method: 'POST',
@@ -216,12 +226,12 @@ uploadForm.addEventListener('submit', async (e) => {
             },
             body: formData
         });
-        
+
         console.log('📥 Response status:', response.status);
-        
+
         const result = await response.json();
         console.log('📥 Response data:', result);
-        
+
         if (!response.ok) {
             // Handle specific error cases
             if (response.status === 401) {
@@ -235,9 +245,9 @@ uploadForm.addEventListener('submit', async (e) => {
             }
             throw new Error(result.error || `Server error: ${response.status}`);
         }
-        
+
         console.log('✅ Resume processing successful:', result);
-        
+
         // Simulate successful resume generation for now
         const newResume = {
             id: Date.now(),
@@ -247,32 +257,32 @@ uploadForm.addEventListener('submit', async (e) => {
             status: 'Completed',
             downloadUrl: '#' // This would be the actual download URL from backend
         };
-        
+
         // Update user data
         userData.credits -= 1;
         userData.resumesGenerated = (userData.resumesGenerated || 0) + 1;
         userData.creditsUsed = (userData.creditsUsed || 0) + 1;
-        
+
         // Save resume to history
         const resumeHistory = JSON.parse(localStorage.getItem('resumeHistory') || '[]');
         resumeHistory.unshift(newResume);
         localStorage.setItem('resumeHistory', JSON.stringify(resumeHistory));
-        
+
         localStorage.setItem('userData', JSON.stringify(userData));
-        
+
         toggleLoading(false);
-        
+
         // Show success modal
         const modal = document.getElementById('successModal');
         modal.classList.add('show');
-        
+
         // Reset form
         clearResumeFile();
         document.getElementById('jobDescText').value = '';
-        
+
         // Update stats
         loadUserData();
-        
+
     } catch (error) {
         console.error('❌ Resume processing failed:', error);
         toggleLoading(false);
@@ -286,46 +296,217 @@ function closeSuccessModal() {
     modal.classList.remove('show');
 }
 
-// Load resume history
-function loadResumeHistory() {
+// Load resume history from backend
+async function loadResumeHistory() {
     try {
-        const resumeHistory = JSON.parse(localStorage.getItem('resumeHistory') || '[]');
         const tableBody = document.getElementById('recentResumesTable');
-        
+
         if (!tableBody) {
-            console.error('Resume table not found');
+            console.error('❌ Resume table not found');
             return;
         }
-        
-        if (resumeHistory.length === 0) {
+
+        console.log('📥 Fetching resume history from backend...');
+        console.log('📥 Fetching resume history from backend...');
+
+        // Get auth token
+        const authToken = localStorage.getItem('authToken');
+        console.log('🔑 Auth token:', authToken ? 'Present' : 'Missing');
+        if (!authToken) {
+            console.error('❌ No auth token found');
+            return;
+        }
+
+        console.log('🌐 Making API request to /api/resume/user-resumes...');
+
+        // Fetch resumes from backend
+        const response = await fetch('/api/resume/user-resumes?limit=5', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        console.log('📡 API response status:', response.status);
+
+        if (!response.ok) {
+            if (response.status === 401) {
+                console.error('❌ Authentication failed');
+                // Clear invalid auth and redirect
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('isLoggedIn');
+                window.location.href = 'index.html';
+                return;
+            }
+            throw new Error(`Failed to fetch resumes: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const resumes = data.data?.resumes || [];
+
+        console.log(`✅ Loaded ${resumes.length} resumes from backend`);
+
+        if (resumes.length === 0) {
             tableBody.innerHTML = `
-                <div class="table-row" style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">
-                    No resumes generated yet. Upload your first resume to get started!
-                </div>
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 3rem 2rem; color: #6c757d;">
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+                            <div style="font-size: 48px; opacity: 0.3;">📄</div>
+                            <div style="font-size: 18px; font-weight: 600; color: #495057;">No resumes generated yet</div>
+                            <div style="font-size: 14px; color: #6c757d;">Upload your first resume to get started!</div>
+                        </div>
+                    </td>
+                </tr>
             `;
             return;
         }
-        
-        // Show only recent 5 resumes
-        const recentResumes = resumeHistory.slice(0, 5);
-        tableBody.innerHTML = recentResumes.map(resume => `
-            <div class="table-row">
-                <div class="table-cell">${resume.date}</div>
-                <div class="table-cell">${resume.originalFile}</div>
-                <div class="table-cell"><span class="badge badge-success">${resume.status}</span></div>
-                <div class="table-cell">
-                    <button class="btn-primary" onclick="downloadResume('${resume.id}')">
-                        📥 Download
-                    </button>
-                </div>
-            </div>
-        `).join('');
+
+        // Display resumes in table
+        tableBody.innerHTML = resumes.map(resume => {
+            const date = new Date(resume.created_at).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+            const fileSize = resume.file_size_kb ? `${resume.file_size_kb} KB` : '';
+            const filename = resume.original_filename || 'Resume.pdf';
+            
+            return `
+                <tr>
+                    <td style="font-weight: 600; color: #6c757d;">${date}</td>
+                    <td>
+                        <div class="filename-primary">${filename}</div>
+                        ${fileSize ? `<div class="filename-secondary">${fileSize}</div>` : ''}
+                    </td>
+                    <td><span class="badge badge-success">Completed</span></td>
+                    <td>
+                        <button class="btn btn-primary" style="padding: 0.5rem 1rem;" onclick="downloadResumeFromBackend('${resume._id}')" title="Download ${filename}">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
     } catch (error) {
-        console.error('Error loading resume history:', error);
+        console.error('❌ Error loading resume history:', error);
+
+        // Fallback to localStorage if backend fails
+        try {
+            console.log('🔄 Falling back to localStorage...');
+            const resumeHistory = JSON.parse(localStorage.getItem('resumeHistory') || '[]');
+            const tableBody = document.getElementById('recentResumesTable');
+
+            if (resumeHistory.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 3rem 2rem; color: #6c757d;">
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+                                <div style="font-size: 48px; opacity: 0.3;">📄</div>
+                                <div style="font-size: 18px; font-weight: 600; color: #495057;">No resumes found</div>
+                                <div style="font-size: 14px; color: #6c757d;">Upload your first resume to get started!</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            // Show only recent 5 resumes from localStorage
+            const recentResumes = resumeHistory.slice(0, 5);
+            tableBody.innerHTML = recentResumes.map(resume => `
+                <tr>
+                    <td style="font-weight: 600; color: #6c757d;">${resume.date}</td>
+                    <td>
+                        <div class="filename-primary">${resume.originalFile}</div>
+                    </td>
+                    <td><span class="badge badge-success">${resume.status}</span></td>
+                    <td>
+                        <button class="btn btn-primary" style="padding: 0.5rem 1rem;" onclick="downloadResume('${resume.id}')" title="Download ${resume.originalFile}">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            console.log('✅ Loaded resume history from localStorage fallback');
+        } catch (fallbackError) {
+            console.error('❌ Fallback error:', fallbackError);
+        }
     }
 }
 
-// Download resume
+// Download resume from backend by ID
+async function downloadResumeFromBackend(resumeId) {
+    try {
+        showAlert('Preparing download...', 'info');
+
+        // Get auth token
+        const authToken = localStorage.getItem('authToken');
+        if (!authToken) {
+            showAlert('Authentication required', 'error');
+            return;
+        }
+
+        console.log(`📥 Downloading resume: ${resumeId}`);
+
+        // Fetch resume from backend
+        const response = await fetch(`/api/resume/download/${resumeId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                showAlert('Resume not found', 'error');
+                return;
+            }
+            if (response.status === 401) {
+                showAlert('Authentication failed', 'error');
+                return;
+            }
+            throw new Error(`Download failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success && data.pdf_data) {
+            // Convert base64 to blob
+            const byteCharacters = atob(data.pdf_data);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+            // Create download link
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = data.filename || `resume_${resumeId}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+
+            showAlert('Download completed successfully!', 'success');
+            console.log('✅ Resume downloaded successfully');
+        } else {
+            showAlert('Failed to download resume', 'error');
+        }
+
+    } catch (error) {
+        console.error('❌ Download error:', error);
+        showAlert('Download failed. Please try again.', 'error');
+    }
+}
+
+// Legacy download function for localStorage fallback
 function downloadResume(id) {
     showAlert('Download started! (Demo mode)', 'success');
     // In real implementation, fetch and download the actual PDF

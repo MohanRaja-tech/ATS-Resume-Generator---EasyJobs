@@ -36,10 +36,16 @@ class Database:
             
         except ConnectionFailure as e:
             print(f"✗ MongoDB connection failed: {str(e)}")
-            sys.exit(1)
+            print("⚠️  The application will run with limited functionality")
+            Database.client = None
+            Database.db = None
+            return False
         except Exception as e:
             print(f"✗ Database initialization error: {str(e)}")
-            sys.exit(1)
+            print("⚠️  The application will run with limited functionality")
+            Database.client = None
+            Database.db = None
+            return False
     
     @staticmethod
     def get_db():

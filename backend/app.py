@@ -30,8 +30,12 @@ def create_app():
         }
     })
     
-    # Initialize database
-    Database.initialize()
+    # Initialize Database (non-blocking)
+    try:
+        Database.initialize()
+    except Exception as db_error:
+        print(f"⚠️  Database initialization failed: {str(db_error)}")
+        print("⚠️  Running without database functionality")
     
     # Register blueprints
     app.register_blueprint(auth_bp, url_prefix='/api/auth')

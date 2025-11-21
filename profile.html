@@ -438,7 +438,15 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
         }
+
+        /* Column widths for better filename display */
+        th:nth-child(1), td:nth-child(1) { width: 15%; } /* Date */
+        th:nth-child(2), td:nth-child(2) { width: 35%; } /* Filename */
+        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Status */
+        th:nth-child(4), td:nth-child(4) { width: 15%; } /* Downloads */
+        th:nth-child(5), td:nth-child(5) { width: 20%; } /* Actions */
 
         thead {
             background-color: #f9f9f9;
@@ -459,6 +467,9 @@
             font-size: 14px;
             color: #666;
             border-bottom: 1px solid #f0f0f0;
+            word-wrap: break-word;
+            white-space: normal;
+            vertical-align: top;
         }
 
         tr:last-child td {
@@ -655,6 +666,7 @@
     <!-- Avatar -->
     <div class="avatar-section">
         <div class="avatar-placeholder" id="userAvatar">
+            <span id="userInitials" style="display: none;">U</span>
             <img src="assets/images/profile.png">
         </div>
     </div>
@@ -726,19 +738,20 @@
     <!-- Resume History -->
     <section class="history-section">
         <div class="history-table">
-            <h2>Resume History</h2>
+            <h2>Resume History (<span id="totalResumes">0</span>)</h2>
             <table>
                 <thead>
                     <tr>
                         <th>DATE</th>
                         <th>ORIGINAL FILE</th>
                         <th>STATUS</th>
+                        <th>DOWNLOADS</th>
                         <th>OPTIMIZED RESUME</th>
                     </tr>
                 </thead>
                 <tbody id="resumeHistoryTable">
                     <tr>
-                        <td colspan="4" style="text-align: center; padding: 2rem; color: #666;">
+                        <td colspan="5" style="text-align: center; padding: 2rem; color: #666;">
                             No resume history yet. Generate your first resume to see it here!
                         </td>
                     </tr>
