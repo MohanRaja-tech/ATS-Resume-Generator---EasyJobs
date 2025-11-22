@@ -72,7 +72,7 @@ def get_profile(current_user_id):
                 'data': {
                     'email': 'demo@example.com',
                     'name': 'Demo User',
-                    'credits': 5,
+                    'credits': 3,
                     'resumesGenerated': 0,
                     'creditsUsed': 0,
                     'memberSince': 'November 20, 2025'
@@ -85,33 +85,16 @@ def get_profile(current_user_id):
         profile_data = {
             'email': user.get('email', 'demo@example.com'),
             'name': user.get('name', 'Demo User'),
-            'credits': user.get('credits', 5),
-            'resumesGenerated': resume_stats.get('total_resumes', 0),
-            'creditsUsed': user.get('credits_used', 0),
-            'memberSince': user.get('created_at', 'November 20, 2025')
+            'credits': user.get('credits', 3),
+            'credits_purchased': user.get('credits_purchased', 3),
+            'credits_used': user.get('credits_used', 0),
+            'resumes_generated': resume_stats.get('total_resumes', 0),
+            'created_at': user.get('created_at')
         }
         
         print(f"Profile data: {profile_data}")
         
-        return jsonify({
-            'success': True,
-            'data': profile_data
-        }), 200
-        
-        if not user:
-            return jsonify({'error': 'User not found'}), 404
-        
-        # Return user profile data
-        return jsonify({
-            'id': str(user['_id']),
-            'name': user['name'],
-            'email': user['email'],
-            'credits': user.get('credits', 0),
-            'credits_purchased': user.get('credits_purchased', 0),
-            'credits_used': user.get('credits_used', 0),
-            'resumes_generated': user.get('resumes_generated', 0),
-            'created_at': user.get('created_at').isoformat() if user.get('created_at') else None
-        }), 200
+        return jsonify(profile_data), 200
         
     except Exception as e:
         print(f"Error fetching profile: {str(e)}")

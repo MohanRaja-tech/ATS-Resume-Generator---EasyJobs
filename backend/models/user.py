@@ -6,12 +6,12 @@ import bcrypt
 class User:
     """User Model"""
     
-    def __init__(self, email, name, password_hash, credits=5, created_at=None):
+    def __init__(self, email, name, password_hash, credits=3, created_at=None):
         self.email = email
         self.name = name
         self.password_hash = password_hash
         self.credits = credits
-        self.credits_purchased = 5  # Welcome bonus
+        self.credits_purchased = 3  # Welcome bonus
         self.credits_used = 0
         self.resumes_generated = 0
         self.created_at = created_at or datetime.utcnow()
@@ -60,8 +60,8 @@ class User:
                 'email': user_data['email'],
                 'name': user_data['name'],
                 'password_hash': user_data['password_hash'],
-                'credits': user_data.get('credits', 5),
-                'credits_purchased': user_data.get('credits_purchased', 5),
+                'credits': user_data.get('credits', 3),
+                'credits_purchased': user_data.get('credits_purchased', 3),
                 'credits_used': user_data.get('credits_used', 0),
                 'resumes_generated': user_data.get('resumes_generated', 0),
                 'created_at': user_data.get('created_at')
@@ -80,8 +80,8 @@ class User:
                     'id': str(user_data['_id']),
                     'email': user_data['email'],
                     'name': user_data['name'],
-                    'credits': user_data.get('credits', 5),
-                    'credits_purchased': user_data.get('credits_purchased', 5),
+                    'credits': user_data.get('credits', 3),
+                    'credits_purchased': user_data.get('credits_purchased', 3),
                     'credits_used': user_data.get('credits_used', 0),
                     'resumes_generated': user_data.get('resumes_generated', 0),
                     'created_at': user_data.get('created_at')
@@ -95,3 +95,19 @@ class User:
         """Check if email already exists"""
         db = Database.get_db()
         return db.users.find_one({'email': email.lower()}) is not None
+    
+    @staticmethod
+    def deduct_credit(user_id):
+        """Deduct one credit from user and increment credits_used"""
+        db = Database.get_db()
+        try:
+            result = db.users.update_one(
+                {'_id': ObjectId(user_id)},
+                {
+                    '$inc': {'credits': -1, 'credits_used': 1}
+                }
+            )
+            return result.modified_count > 0
+        except Exception as e:
+            print(f"Error deducting credit: {str(e)}")
+            return False
