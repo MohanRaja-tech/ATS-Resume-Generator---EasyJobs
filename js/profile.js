@@ -247,19 +247,26 @@ async function loadResumeHistory() {
                     month: 'short',
                     day: 'numeric'
                 });
-                const filename = resume.original_filename || 'Resume.pdf';
+                const filename = resume.originalFile || resume.original_filename || 'Resume.pdf';
                 const fileSize = resume.file_size_kb ? `${resume.file_size_kb} KB` : '';
                 const downloadCount = resume.download_count || 0;
-                
+
+
                 // Debug: Check what ID field exists
                 const resumeId = resume._id || resume.id || resume.resume_id;
                 console.log('Resume object:', resume);
                 console.log('Resume ID found:', resumeId);
-                
+                console.log('Filename fields:', {
+                    original_filename: resume.original_filename,
+                    filename: resume.filename,
+                    file_name: resume.file_name,
+                    originalFilename: resume.originalFilename
+                });
+
                 return `
                     <tr>
-                        <td style="font-weight: 600;">${date}</td>
-                        <td style="max-width: 250px; word-wrap: break-word; white-space: normal;">
+                        <td style="font-weight: 600; white-space: nowrap;">${date}</td>
+                        <td style="word-wrap: break-word; white-space: normal;">
                             <div style="font-weight: 600; margin-bottom: 2px; word-break: break-word;">${filename}</div>
                             ${fileSize ? `<div style="font-size: 12px; color: #666;">${fileSize}</div>` : ''}
                         </td>

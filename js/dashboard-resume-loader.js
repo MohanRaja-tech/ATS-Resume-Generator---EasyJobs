@@ -50,8 +50,8 @@ async function loadResumeHistory() {
                     </td>
                     <td class="table-cell"><span class="badge badge-success">${resume.status}</span></td>
                     <td class="table-cell">
-                        <button class="btn-primary" onclick="downloadResumeFromBackend('${resume.id}')">
-                            📥 Download
+                        <button class="btn btn-primary" onclick="downloadResumeFromBackend('${resume.id}')">
+                            <i class="fas fa-download"></i> Download
                         </button>
                     </td>
                 </tr>
