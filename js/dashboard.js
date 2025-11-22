@@ -175,6 +175,38 @@ function clearResumeFile() {
     document.getElementById('resumeFileInfo').style.display = 'none';
 }
 
+// Store generated resume data for download
+let generatedResumeData = null;
+
+// Helper function to download PDF from base64 data
+function downloadPdfFromBase64(base64Data, filename) {
+    try {
+        // Convert base64 to blob
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+        // Create download link
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        console.log('✅ PDF downloaded successfully');
+    } catch (error) {
+        console.error('❌ Download error:', error);
+        showAlert('Failed to download PDF. Please try again.', 'error');
+    }
+}
+
 // Form submission
 const uploadForm = document.getElementById('uploadForm');
 uploadForm.addEventListener('submit', async (e) => {
@@ -216,10 +248,10 @@ uploadForm.addEventListener('submit', async (e) => {
         formData.append('resumeFile', resumeFile);
         formData.append('jobDescription', jobDescText);
 
-        console.log('📤 Sending request to /api/resume/process...');
+        console.log('📤 Step 1: Sending request to /api/resume/process for text extraction...');
 
-        // Call backend API for text extraction
-        const response = await fetch('/api/resume/process', {
+        // Step 1: Call backend API for text extraction
+        const processResponse = await fetch('/api/resume/process', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${authToken}`
@@ -227,14 +259,14 @@ uploadForm.addEventListener('submit', async (e) => {
             body: formData
         });
 
-        console.log('📥 Response status:', response.status);
+        console.log('📥 Text extraction response status:', processResponse.status);
 
-        const result = await response.json();
-        console.log('📥 Response data:', result);
+        const processResult = await processResponse.json();
+        console.log('📥 Text extraction response data:', processResult);
 
-        if (!response.ok) {
+        if (!processResponse.ok) {
             // Handle specific error cases
-            if (response.status === 401) {
+            if (processResponse.status === 401) {
                 console.log('❌ 401 Unauthorized - clearing auth and redirecting');
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('isLoggedIn');
@@ -243,31 +275,62 @@ uploadForm.addEventListener('submit', async (e) => {
                 setTimeout(() => window.location.href = 'index.html', 2000);
                 return;
             }
-            throw new Error(result.error || `Server error: ${response.status}`);
+            throw new Error(processResult.error || `Server error: ${processResponse.status}`);
         }
 
-        console.log('✅ Resume processing successful:', result);
+        console.log('✅ Text extraction successful');
 
-        // Simulate successful resume generation for now
-        const newResume = {
-            id: Date.now(),
-            date: new Date().toLocaleDateString(),
-            originalFile: resumeFile.name,
-            jobDesc: jobDescText ? 'Text provided' : 'None',
-            status: 'Completed',
-            downloadUrl: '#' // This would be the actual download URL from backend
+        // Step 2: Call AWS API to generate optimized resume
+        console.log('📤 Step 2: Sending request to /api/resume/generate-resume for AWS processing...');
+
+        const generateResponse = await fetch('/api/resume/generate-resume', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                job_description: jobDescText
+            })
+        });
+
+        console.log('📥 Resume generation response status:', generateResponse.status);
+
+        const generateResult = await generateResponse.json();
+        console.log('📥 Resume generation response data:', generateResult);
+
+        if (!generateResponse.ok) {
+            if (generateResponse.status === 401) {
+                console.log('❌ 401 Unauthorized - clearing auth and redirecting');
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userData');
+                showAlert('Session expired. Please log in again.', 'error');
+                setTimeout(() => window.location.href = 'index.html', 2000);
+                return;
+            }
+            throw new Error(generateResult.error || `Resume generation failed: ${generateResponse.status}`);
+        }
+
+        console.log('✅ Resume generation successful');
+
+        // Store generated resume data for manual download
+        generatedResumeData = {
+            resume_id: generateResult.data.resume_id,
+            pdf_base64: generateResult.data.pdf_base64,
+            filename: generateResult.data.original_filename || resumeFile.name
         };
+
+        // Step 3: Auto-download the generated PDF
+        console.log('📥 Step 3: Auto-downloading generated PDF...');
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+        const downloadFilename = `optimized_resume_${timestamp}.pdf`;
+        downloadPdfFromBase64(generateResult.data.pdf_base64, downloadFilename);
 
         // Update user data
         userData.credits -= 1;
         userData.resumesGenerated = (userData.resumesGenerated || 0) + 1;
         userData.creditsUsed = (userData.creditsUsed || 0) + 1;
-
-        // Save resume to history
-        const resumeHistory = JSON.parse(localStorage.getItem('resumeHistory') || '[]');
-        resumeHistory.unshift(newResume);
-        localStorage.setItem('resumeHistory', JSON.stringify(resumeHistory));
-
         localStorage.setItem('userData', JSON.stringify(userData));
 
         toggleLoading(false);
@@ -280,13 +343,13 @@ uploadForm.addEventListener('submit', async (e) => {
         clearResumeFile();
         document.getElementById('jobDescText').value = '';
 
-        // Update stats
+        // Update stats and reload resume history
         loadUserData();
 
     } catch (error) {
-        console.error('❌ Resume processing failed:', error);
+        console.error('❌ Resume generation failed:', error);
         toggleLoading(false);
-        showAlert(error.message || 'Failed to process resume. Please try again.', 'error');
+        showAlert(error.message || 'Failed to generate resume. Please try again.', 'error');
     }
 });
 
@@ -295,6 +358,19 @@ function closeSuccessModal() {
     const modal = document.getElementById('successModal');
     modal.classList.remove('show');
 }
+
+// Manual download from success modal
+function downloadFromModal() {
+    if (generatedResumeData && generatedResumeData.pdf_base64) {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+        const filename = `optimized_resume_${timestamp}.pdf`;
+        downloadPdfFromBase64(generatedResumeData.pdf_base64, filename);
+        showAlert('Download started!', 'success');
+    } else {
+        showAlert('No resume data available. Please generate a new resume.', 'error');
+    }
+}
+
 
 // Load resume history from backend
 async function loadResumeHistory() {
@@ -371,7 +447,7 @@ async function loadResumeHistory() {
             });
             const fileSize = resume.file_size_kb ? `${resume.file_size_kb} KB` : '';
             const filename = resume.original_filename || 'Resume.pdf';
-            
+
             return `
                 <tr>
                     <td style="font-weight: 600; color: #6c757d;">${date}</td>

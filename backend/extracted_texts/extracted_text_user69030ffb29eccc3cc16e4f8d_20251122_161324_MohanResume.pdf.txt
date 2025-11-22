@@ -1,0 +1,94 @@
+EXTRACTED RESUME TEXT
+==================================================
+Original Filename: Mohan Resume.pdf
+User ID: 69030ffb29eccc3cc16e4f8d
+Extraction Timestamp: 2025-11-22 16:13:24
+==================================================
+
+RESUME TEXT:
+------------------------------
+Mohan Raja
++91 9003948329 mohantwo3@gmail.com
+Aspiring WebDeveloper Intern | F ull-StackDeveloper | Freelancer
+mohanrportfolio.vercel.app
+https://www.linkedin.com/in/mohanraja-tech
+https://github.com/MohanRaja-tech https://leetcode.com/u/Mohan_06
+TECHNICAL SKILLS SUMMARY
+Web Developer Intern & Freelancer with experience in web
+TECHNOLOGIES
+development, AI integration, and building scalable, reliable solutions.
+Language : Java , Python , C
+PROFESSIONAL EXPERIENCE
+Frontend : Html, Css , Javascript ,
+React js Intern Web Developer | Kongu Engineering College April
+Backend : Node js , Express js , Flask 2025 - Present
+DataBase : MongoDB , MySQL
+Building and Maintaining custom web applications for
+AI/ML : Rag , LLM , Langchain institutional needs.
+Freelance Software Developer | EasyJobs, Hyderabad (Oct
+Tools & Platforms:
+2025 – Nov 2025)
+Git,GitHub,VSCode,Vercel,
+Netlify,Render Developed an ATS-friendly resume generator application
+PROJECTS
+Education
+2023-20 27 - Kongu Engineering Facial Intruder Security System Sep 2024 – Dec 2024
+College Tech Stack : opencv - python ,Numpy , smtplib , PIL , Twilio API ,
+B.Tech Information Technology
+pygame
+CGP A : 8 / 10
+GIT : https://github.com/MohanRaja-tech/Facial-Intruder-Alert-System
+2022-2023 - Kongu Kalvi Nilayam
+HSC
+ATS Friendly Resume Generator (EasyJobs) Oct 2025 – Nov
+Percentage : 90 / 100
+2025
+CERTIFICATIONS
+Tech Stack : Python , Flask , AWS Rest API’s , MongoDB
+AWS - Certified Cloud practitioner Intelligent Code Vulnerability Detection & Security System
+FreecodeCamp - Responsive web Design May 2025 - Jun 2025
+FreecodeCamp - Javascript
+Tech Stack : Python , Flask , groq API , Bycrypt , crypto , Code Llama
+Accenture - Software Engineering
+GIT: https://github.co m/MohanRaja-tech/AI-Powered-Secure-code-editor
+AREAS OF INTEREST
+GroNow - Ecommerce Website Jul 2025 - Aug 2025
+Full Stack Development , Machine
+Tech Stack : React.js , Node.js , Express.js , MongoDB
+Learning
+GIT :https://github.com/MohanRaja-tech/Ecommerce-Website-Shopping-
+ACHIEVEMENTS
+Companion-.git
+Secured First prize for Best Software Project
+in Prototype Expo (2024 - 25) Kongu Engineering College Official Website Apr 25 - Oct 25
+Tech Stack : React.js
+Secured Second prize for Best Software
+Website : kongu.ac.in
+Project in Techno Cultural Fest (2025-26)
+Microgrids Monitoring System Sep 2025 - Oct 2025
+Secured First prize in Proof of Concept (25-
+Tech Stack : React Native , PostGres SQL , Node-RED , Docker , MQTT
+26)
+GIT : https://github.com/MohanRaja-tech/Micro-grid-app-SIH-.git
+Secured First prize in 30 hrs Hackathon in
+KEC KEC Asset Management System Aug 2025 - Sep 2025
+Tech Stack : Php ,Html , Css , MySQL
+Secured Second prize in 24 hrs Hackathon in
+Sri Eshwar College of Engineering Website : systems.kongu.edu
+AI Powered Study Buddy March 2025 - April 2025
+Secured Second place in the Coding
+Tech Stack : Python , Streamlit , Rag , Langchain , Gemini API
+Competition (2024-25) in KEC
+GIT:https://github.com/MohanRaja-tech/RAG-AI-Powered-Study-
+Secured first Prize in Many Project and Paper
+Buddy.git
+presentations
+
+==================================================
+JOB DESCRIPTION:
+------------------------------
+
+
+==================================================
+Extraction completed successfully!
+Total characters extracted: 3066

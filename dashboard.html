@@ -585,7 +585,7 @@
             background-color: white;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             margin-bottom: 40px;
         }
 
@@ -596,10 +596,30 @@
         }
 
         /* Column widths for better filename display */
-        th:nth-child(1), td:nth-child(1) { width: 15%; } /* Date */
-        th:nth-child(2), td:nth-child(2) { width: 40%; } /* Filename */
-        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Status */
-        th:nth-child(4), td:nth-child(4) { width: 30%; } /* Actions */
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 15%;
+        }
+
+        /* Date */
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 40%;
+        }
+
+        /* Filename */
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 15%;
+        }
+
+        /* Status */
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 30%;
+        }
+
+        /* Actions */
 
         thead {
             background-color: #f9f9f9;
@@ -1033,7 +1053,7 @@
             <h3>🎉 Resume Generated Successfully!</h3>
             <p>Your ATS-optimized resume is ready for download.</p>
             <div class="modal-buttons">
-                <button id="downloadBtn" class="btn btn-primary">Download Resume</button>
+                <button onclick="downloadFromModal()" class="btn btn-primary">Download Resume</button>
                 <button onclick="closeSuccessModal()" class="btn btn-secondary">Close</button>
             </div>
         </div>
