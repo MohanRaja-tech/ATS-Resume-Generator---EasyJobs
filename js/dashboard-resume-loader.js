@@ -126,9 +126,10 @@ async function downloadResumeFromBackend(resumeId) {
         const contentDisposition = response.headers.get('Content-Disposition');
         let filename = 'resume.pdf';
         if (contentDisposition) {
-            const filenameMatch = contentDisposition.match(/filename="?(.+)"?/);
+            // Match filename with or without quotes, non-greedy capture
+            const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/);
             if (filenameMatch) {
-                filename = filenameMatch[1];
+                filename = filenameMatch[1].trim();
             }
         }
 

@@ -172,21 +172,25 @@
       position: relative;
       align-self: stretch;
       width: 100%;
-      height: 708px;
-      background-color: #9fc3ff;
+      max-width: 1200px;
+      margin: 0 auto;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      background-color: #000000;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .frame .div-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .frame .text-wrapper-3 {
-      position: absolute;
-      top: calc(50.00% - 7px);
-      left: calc(50.00% - 24px);
-      font-family: "Inter", Helvetica;
-      font-weight: 400;
-      color: #000000;
-      font-size: 12px;
-      text-align: center;
-      letter-spacing: 0;
-      line-height: normal;
+      display: none;
     }
 
     .frame .div-5 {
@@ -326,6 +330,11 @@
           rgba(254, 248, 255, 1) 100%);
     }
 
+    .frame .div-11 .div-10 {
+      z-index: 2;
+      position: relative;
+    }
+
     .frame .text-wrapper-6 {
       position: relative;
       align-self: stretch;
@@ -339,12 +348,15 @@
     }
 
     .frame .image-2 {
-      top: 0;
-      left: 115px;
-      width: 344px;
-      height: 403px;
+      top: auto;
+      bottom: 0;
+      right: 0;
+      left: auto;
+      width: 280px;
+      height: 320px;
       position: absolute;
-      object-fit: cover;
+      object-fit: contain;
+      z-index: 1;
     }
 
     .frame .div-12 {
@@ -440,6 +452,11 @@
       border: 1px solid;
     }
 
+    .frame .div-15 .div-10 {
+      z-index: 2;
+      position: relative;
+    }
+
     .frame .secure-private {
       position: relative;
       align-self: stretch;
@@ -453,12 +470,15 @@
     }
 
     .frame .image-5 {
-      top: 49px;
-      left: 128px;
-      width: 309px;
-      height: 354px;
+      top: auto;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 260px;
+      height: 280px;
       position: absolute;
-      object-fit: cover;
+      object-fit: contain;
+      z-index: 1;
     }
 
     .frame .group-3 {
@@ -1477,7 +1497,10 @@
           </a>
         </div>
         <div class="div-wrapper">
-          <div class="text-wrapper-3">Video</div>
+          <video autoplay muted loop playsinline>
+            <source src="assets/images/Resume video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
       <div class="div-5">
