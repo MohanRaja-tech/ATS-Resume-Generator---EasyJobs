@@ -1,739 +1,1812 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EasyJobs - Landing Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(180deg, #1E88E5 0%, #64B5F6 30%, #90CAF9 50%, #BBDEFB 70%, #E3F2FD 85%, #FFFFFF 100%);
-            background-attachment: fixed;
-            min-height: 100vh;
-        }
-
-        /* Navigation Styles */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            position: relative;
-            z-index: 1000;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .logo img {
-            height: 50px;
-            width: auto;
-            filter: brightness(0) invert(1);
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-menu li a {
-            color: #FFFFFF;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-menu li a:hover {
-            opacity: 0.8;
-        }
-
-        .login-btn {
-            border: 2px solid #FFFFFF;
-            border-radius: 25px;
-            padding: 10px 25px;
-            color: #FFFFFF;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .login-btn:hover {
-            background-color: #FFFFFF;
-            color: #0079EC;
-        }
-
-        /* Main Content Styles */
-        .main-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: calc(100vh - 120px);
-            padding: 20px 40px 60px 40px;
-            text-align: center;
-            margin-top: -40px;
-        }
-
-        .hero-section {
-            /* Frame 39 auto layout */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0px;
-            gap: 16px;
-            
-            position: relative;
-            width: 1098px;
-            max-width: 90vw;
-            height: auto;
-        }
-
-        .hero-title {
-            /* Land your dream job with AI powered resume optimization */
-            width: 100%;
-            max-width: 1098px;
-            height: auto;
-            
-            font-family: 'Poppins', sans-serif;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 52px;
-            line-height: 78px;
-            text-align: center;
-            text-transform: capitalize;
-            
-            color: #FFFFFF;
-            margin-bottom: 0;
-            
-            /* Inside auto layout */
-            flex: none;
-            order: 0;
-            flex-grow: 0;
-        }
-
-        .hero-description {
-            /* Transform your resume description */
-            width: 100%;
-            max-width: 1098px;
-            height: auto;
-            
-            font-family: 'Poppins', sans-serif;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 22px;
-            line-height: 33px;
-            text-align: center;
-            
-            color: #FFFFFF;
-            margin-bottom: 40px;
-            
-            /* Inside auto layout */
-            flex: none;
-            order: 1;
-            align-self: stretch;
-            flex-grow: 0;
-        }
-
-        .cta-button {
-            background-color: #000000;
-            color: #FFFFFF;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background-color: #333333;
-            transform: translateY(-2px);
-        }
-
-        .cta-button::after {
-            content: "→";
-            font-size: 1.2rem;
-        }
-
-        /* Why Choose Us Section */
-        .why-choose-wrapper {
-            padding: 0px 60px 60px 60px;
-            margin-top: -100px;
-        }
-
-        .why-choose-section {
-            background: #FFFFFF;
-            padding: 60px 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-            border-radius: 16px;
-            max-width: 1150px;
-            margin: 0 auto;
-            box-shadow: 0px 8px 32px rgba(30, 136, 229, 0.15);
-            border: 3px solid rgba(100, 181, 246, 0.3);
-        }
-
-        .section-title {
-            font-family: 'Poppins', sans-serif;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 36px;
-            line-height: 54px;
-            text-align: center;
-            color: #000000;
-            margin-bottom: 10px;
-        }
-
-        .section-subtitle {
-            font-family: 'Poppins', sans-serif;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 27px;
-            text-align: center;
-            color: #666666;
-            max-width: 600px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1200px;
-            width: 100%;
-        }
-
-        .feature-card {
-            background: #FFFFFF;
-            border: 1px solid #E5E5E5;
-            border-radius: 16px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            transition: all 0.3s ease;
-            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .feature-card:hover {
-            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
-            transform: translateY(-4px);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: #FFFFFF;
-        }
-
-        .feature-card:nth-child(1) .feature-icon {
-            background: linear-gradient(135deg, #FF6EC7 0%, #FF8ED4 100%);
-        }
-
-        .feature-card:nth-child(2) .feature-icon {
-            background: linear-gradient(135deg, #FDB755 0%, #FDC96A 100%);
-        }
-
-        .feature-card:nth-child(3) .feature-icon {
-            background: linear-gradient(135deg, #4A9FF5 0%, #6BB3F7 100%);
-        }
-
-        .feature-card:nth-child(4) .feature-icon {
-            background: linear-gradient(135deg, #5DD682 0%, #7DE49A 100%);
-        }
-
-        .feature-card:nth-child(5) .feature-icon {
-            background: linear-gradient(135deg, #A855F7 0%, #BA6FF9 100%);
-        }
-
-        .feature-card:nth-child(6) .feature-icon {
-            background: linear-gradient(135deg, #FF7A59 0%, #FF9475 100%);
-        }
-
-        .feature-title {
-            font-family: 'Poppins', sans-serif;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 20px;
-            line-height: 30px;
-            color: #000000;
-        }
-
-        .feature-description {
-            font-family: 'Poppins', sans-serif;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 21px;
-            color: #666666;
-        }
-
-        /* How It Works Section */
-        .how-it-works-wrapper {
-            padding: 60px 60px 80px 60px;
-            background: transparent;
-        }
-
-        .how-it-works-section {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 50px;
-            position: relative;
-        }
-
-
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            width: 100%;
-            position: relative;
-        }
-
-        .steps-container .step:nth-child(3) {
-            grid-column: 1 / -1;
-            max-width: 50%;
-            margin: 0 auto;
-        }
-
-        .step {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 12px;
-            padding: 30px 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
-            position: relative;
-            box-shadow: 0px 4px 16px rgba(30, 136, 229, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .step:hover {
-            box-shadow: 0px 8px 24px rgba(30, 136, 229, 0.2);
-            transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.85);
-        }
-
-        .step-number {
-            width: 32px;
-            height: 32px;
-            background: #E3F2FD;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 600;
-            color: #1976D2;
-            margin-bottom: 8px;
-        }
-
-        .step-decorator {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 100px;
-            height: 100px;
-            opacity: 0.8;
-        }
-
-        .star-icon {
-            width: 100%;
-            height: 100%;
-        }
-
-
-        .step-title {
-            font-family: 'Poppins', sans-serif;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 20px;
-            line-height: 30px;
-            text-align: left;
-            color: #000000;
-        }
-
-        .step-description {
-            font-family: 'Poppins', sans-serif;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 21px;
-            text-align: left;
-            color: #666666;
-        }
-
-        /* Footer Section */
-        .footer-section {
-            background: rgba(230, 243, 255, 1);
-            padding: 40px 40px;
-            border-top: 2px solid rgba(0, 121, 236, 0.2);
-            box-shadow: 0px -4px 20px rgba(0, 121, 236, 0.1);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 40px;
-        }
-
-        .footer-left {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .footer-logo img {
-            height: 50px;
-            width: auto;
-        }
-
-        .footer-text {
-            font-family: 'Poppins', sans-serif;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 24px;
-            color: #333333;
-            max-width: 500px;
-            margin-bottom: 20px;
-        }
-
-        .footer-highlight {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 24px;
-            color: #0079EC;
-            margin-top: 20px;
-        }
-
-        .footer-highlight::before {
-            content: "✓";
-            width: 24px;
-            height: 24px;
-            background: #0079EC;
-            color: #FFFFFF;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .footer-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            min-width: 200px;
-        }
-
-        .footer-btn-primary {
-            background: #000000;
-            color: #FFFFFF;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 25px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 15px;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .footer-btn-primary:hover {
-            background: #333333;
-            transform: translateY(-2px);
-        }
-
-        .footer-btn-secondary {
-            background: #FFFFFF;
-            color: #000000;
-            padding: 12px 30px;
-            border: 2px solid #000000;
-            border-radius: 25px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 15px;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .footer-btn-secondary:hover {
-            background: #000000;
-            color: #FFFFFF;
-            transform: translateY(-2px);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 15px 20px;
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .nav-menu {
-                gap: 20px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .hero-section {
-                width: 100%;
-                max-width: 95vw;
-            }
-
-            .hero-title {
-                font-size: 32px;
-                line-height: 48px;
-            }
-
-            .hero-description {
-                font-size: 18px;
-                line-height: 27px;
-            }
-
-            .main-content {
-                padding: 20px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .steps-container {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .steps-container .step:nth-child(3) {
-                max-width: 100%;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                gap: 30px;
-            }
-
-            .footer-buttons {
-                width: 100%;
-            }
-
-            .footer-btn-primary,
-            .footer-btn-secondary {
-                width: 100%;
-            }
-
-            .section-title {
-                font-size: 28px;
-                line-height: 42px;
-            }
-        }
-    </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <style>
+    @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+    @import url("https://fonts.googleapis.com/css?family=Poppins:500,400,600|Inter:400");
+
+    * {
+      -webkit-font-smoothing: antialiased;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0px;
+      height: 100%;
+    }
+
+    /* a blue color as a generic focus style */
+    button:focus-visible {
+      outline: 2px solid #4a90e2 !important;
+      outline: -webkit-focus-ring-color auto 5px !important;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .frame {
+      background-color: #ffffff;
+      width: 100%;
+      min-width: 1440px;
+      min-height: 6491px;
+      position: relative;
+    }
+
+    .frame .group {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1440px;
+      height: 1066px;
+    }
+
+    .frame .div {
+      display: flex;
+      flex-direction: column;
+      width: 1440px;
+      height: 5337px;
+      align-items: center;
+      gap: 96px;
+      padding: 100px 0px 0px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 1039px;
+    }
+
+    .frame .div-2 {
+      display: flex;
+      flex-direction: column;
+      width: 1440px;
+      align-items: center;
+      gap: 31px;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .frame .div-3 {
+      display: flex;
+      flex-direction: column;
+      width: 1098px;
+      align-items: center;
+      gap: 30px;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .frame .div-4 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      align-self: stretch;
+      width: 100%;
+      flex: 0 0 auto;
+    }
+
+    .frame .group-2 {
+      position: relative;
+      width: 1100px;
+      height: 156px;
+      margin-right: -2.00px;
+    }
+
+    .frame .land-your-dream-job {
+      position: absolute;
+      top: 0;
+      left: calc(50.00% - 550px);
+      width: 1098px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #000000;
+      font-size: 52px;
+      text-align: center;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .img {
+      position: absolute;
+      top: 3px;
+      left: 782px;
+      width: 71px;
+      height: 71px;
+    }
+
+    .frame .text-wrapper {
+      position: relative;
+      align-self: stretch;
+      font-family: "Poppins", Helvetica;
+      font-weight: 500;
+      color: #000000;
+      font-size: 22px;
+      text-align: center;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .button {
+      all: unset;
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 32px;
+      position: relative;
+      flex: 0 0 auto;
+      background-color: #07070b;
+      border-radius: 50px;
+      overflow: hidden;
+      box-shadow: 0px 4px 4px #1aa6ed1a;
+    }
+
+    .frame .text-wrapper-2 {
+      position: relative;
+      width: fit-content;
+      margin-top: -2.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 500;
+      color: #ffffff;
+      font-size: 16px;
+      text-align: center;
+      letter-spacing: 0;
+      line-height: 21.1px;
+      white-space: nowrap;
+    }
+
+    .frame .img-2 {
+      position: relative;
+      width: 20px;
+      height: 20px;
+    }
+
+    .frame .div-wrapper {
+      position: relative;
+      align-self: stretch;
+      width: 100%;
+      height: 708px;
+      background-color: #9fc3ff;
+    }
+
+    .frame .text-wrapper-3 {
+      position: absolute;
+      top: calc(50.00% - 7px);
+      left: calc(50.00% - 24px);
+      font-family: "Inter", Helvetica;
+      font-weight: 400;
+      color: #000000;
+      font-size: 12px;
+      text-align: center;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .div-5 {
+      display: flex;
+      flex-direction: column;
+      width: 1439px;
+      height: 1579px;
+      align-items: center;
+      justify-content: center;
+      gap: 44px;
+      position: relative;
+      background-color: #f5f9ff;
+    }
+
+    .frame .div-6 {
+      display: flex;
+      flex-direction: column;
+      width: 703px;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .frame .text-wrapper-4 {
+      position: relative;
+      align-self: stretch;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #07070b;
+      font-size: 40px;
+      text-align: center;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .p {
+      position: relative;
+      align-self: stretch;
+      font-family: "Poppins", Helvetica;
+      font-weight: 500;
+      color: #000000;
+      font-size: 24px;
+      text-align: center;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .div-7 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+      align-self: stretch;
+      width: 100%;
+      flex: 0 0 auto;
+    }
+
+    .frame .div-8 {
+      display: inline-flex;
+      align-items: center;
+      gap: 17px;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .frame .div-9 {
+      position: relative;
+      width: 773px;
+      height: 403px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid;
+      border-color: #e7e0ff;
+      background: linear-gradient(89deg,
+          rgba(201, 214, 254, 1) 0%,
+          rgba(215, 201, 255, 1) 50%,
+          rgba(201, 214, 255, 1) 100%);
+    }
+
+    .frame .div-10 {
+      display: flex;
+      flex-direction: column;
+      width: 308px;
+      align-items: flex-start;
+      gap: 12px;
+      position: absolute;
+      top: 31px;
+      left: 24px;
+    }
+
+    .frame .AI-powered {
+      position: relative;
+      align-self: stretch;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #6550d8;
+      font-size: 24px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .text-wrapper-5 {
+      position: relative;
+      align-self: stretch;
+      font-family: "Poppins", Helvetica;
+      font-weight: 500;
+      color: #454545;
+      font-size: 20px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .image {
+      top: 14px;
+      left: 345px;
+      width: 428px;
+      height: 389px;
+      position: absolute;
+      object-fit: cover;
+    }
+
+    .frame .div-11 {
+      position: relative;
+      width: 459px;
+      height: 403px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid;
+      border-color: #fad2ff;
+      background: linear-gradient(135deg,
+          rgba(252, 228, 255, 1) 0%,
+          rgba(254, 248, 255, 1) 100%);
+    }
+
+    .frame .text-wrapper-6 {
+      position: relative;
+      align-self: stretch;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #c736d7;
+      font-size: 24px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .image-2 {
+      top: 0;
+      left: 115px;
+      width: 344px;
+      height: 403px;
+      position: absolute;
+      object-fit: cover;
+    }
+
+    .frame .div-12 {
+      position: relative;
+      width: 459px;
+      height: 403px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid;
+      border-color: #bdf8bb;
+      background: linear-gradient(135deg,
+          rgba(215, 255, 211, 1) 0%,
+          rgba(248, 255, 248, 1) 100%);
+    }
+
+    .frame .ATS-score-analysis {
+      position: relative;
+      align-self: stretch;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #27a070;
+      font-size: 24px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .image-3 {
+      top: 189px;
+      left: 47px;
+      width: 412px;
+      height: 214px;
+      position: absolute;
+      object-fit: cover;
+    }
+
+    .frame .div-13 {
+      width: 773px;
+      border-radius: 18px;
+      border-color: #ffd4b2;
+      background: linear-gradient(135deg,
+          rgba(254, 245, 225, 1) 0%,
+          rgba(255, 212, 181, 1) 50%,
+          rgba(254, 245, 225, 1) 100%);
+      position: relative;
+      height: 403px;
+      overflow: hidden;
+      border: 1px solid;
+    }
+
+    .frame .text-wrapper-7 {
+      position: relative;
+      align-self: stretch;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #e05e35;
+      font-size: 24px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .image-4 {
+      top: 0;
+      left: 412px;
+      width: 362px;
+      height: 403px;
+      position: absolute;
+      object-fit: cover;
+    }
+
+    .frame .div-14 {
+      display: flex;
+      width: 437px;
+      align-items: center;
+      gap: 17px;
+      position: relative;
+      flex: 0 0 auto;
+      border-radius: 6px;
+    }
+
+    .frame .div-15 {
+      width: 437px;
+      border-radius: 12px;
+      border-color: #b2e2ff;
+      background: linear-gradient(135deg,
+          rgba(225, 246, 254, 1) 0%,
+          rgba(195, 226, 255, 1) 50%,
+          rgba(225, 246, 254, 1) 100%);
+      position: relative;
+      height: 403px;
+      overflow: hidden;
+      border: 1px solid;
+    }
+
+    .frame .secure-private {
+      position: relative;
+      align-self: stretch;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #0079ec;
+      font-size: 24px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .image-5 {
+      top: 49px;
+      left: 128px;
+      width: 309px;
+      height: 354px;
+      position: absolute;
+      object-fit: cover;
+    }
+
+    .frame .group-3 {
+      position: relative;
+      width: 1438.98px;
+      height: 722px;
+    }
+
+    .frame .union {
+      position: absolute;
+      top: 86px;
+      left: calc(50.00% - 719px);
+      width: 1439px;
+      height: 529px;
+    }
+
+    .frame .div-16 {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      position: absolute;
+      top: 0;
+      left: calc(50.00% - 222px);
+    }
+
+    .frame .how-it-works {
+      position: relative;
+      width: fit-content;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #07070b;
+      font-size: 40px;
+      text-align: center;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .get-your-ats {
+      position: relative;
+      width: fit-content;
+      font-family: "Poppins", Helvetica;
+      font-weight: 500;
+      color: #637381;
+      font-size: 24px;
+      text-align: center;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .female-memojis {
+      position: absolute;
+      top: 338px;
+      left: 315px;
+      width: 163px;
+      height: 163px;
+      background-image: url(https://c.animaapp.com/mjh8sg54WDr9Kv/img/29-1-1.png);
+      background-size: cover;
+      background-position: 50% 50%;
+    }
+
+    .frame .male-memojis {
+      position: absolute;
+      top: 420px;
+      left: calc(50.00% - 57px);
+      width: 161px;
+      height: 161px;
+      background-image: url(https://c.animaapp.com/mjh8sg54WDr9Kv/img/43-6.png);
+      background-size: cover;
+      background-position: 50% 50%;
+    }
+
+    .frame .frame-wrapper {
+      position: absolute;
+      top: 197px;
+      left: 249px;
+      width: 295px;
+      height: 141px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff1a;
+      border-radius: 12px;
+      overflow: hidden;
+      backdrop-filter: blur(2.0px) brightness(110%);
+      -webkit-backdrop-filter: blur(2.0px) brightness(110%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 1px 0 0 rgba(255,
+          255,
+          255,
+          0.32), inset 0 -1px 1px rgba(0, 0, 0, 0.13), inset -1px 0 1px rgba(0,
+          0,
+          0,
+          0.11);
+    }
+
+    .frame .div-17 {
+      display: flex;
+      margin-top: 1px;
+      height: 108px;
+      margin-left: -16.0px;
+      width: 251px;
+      position: relative;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .frame .text-wrapper-8 {
+      margin-top: -1.00px;
+      font-weight: 600;
+      font-size: 20px;
+      position: relative;
+      align-self: stretch;
+      font-family: "Poppins", Helvetica;
+      color: #000000;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .text-wrapper-9 {
+      font-weight: 400;
+      font-size: 16px;
+      position: relative;
+      align-self: stretch;
+      font-family: "Poppins", Helvetica;
+      color: #000000;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .frame-wrapper-2 {
+      position: absolute;
+      top: 197px;
+      left: 947px;
+      width: 295px;
+      height: 141px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff1a;
+      border-radius: 12px;
+      overflow: hidden;
+      backdrop-filter: blur(2.0px) brightness(110%);
+      -webkit-backdrop-filter: blur(2.0px) brightness(110%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 1px 0 0 rgba(255,
+          255,
+          255,
+          0.32), inset 0 -1px 1px rgba(0, 0, 0, 0.13), inset -1px 0 1px rgba(0,
+          0,
+          0,
+          0.11);
+    }
+
+    .frame .div-18 {
+      display: inline-flex;
+      margin-top: 1px;
+      height: 108px;
+      margin-left: -17.0px;
+      width: 242px;
+      gap: 6px;
+      position: relative;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .frame .apply-download {
+      position: relative;
+      width: 242px;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #000000;
+      font-size: 20px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .text-wrapper-10 {
+      width: 242px;
+      font-weight: 400;
+      color: #000000;
+      font-size: 16px;
+      position: relative;
+      font-family: "Poppins", Helvetica;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .frame-wrapper-3 {
+      position: absolute;
+      top: 581px;
+      left: calc(50.00% - 124px);
+      width: 295px;
+      height: 141px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff1a;
+      border-radius: 12px;
+      overflow: hidden;
+      backdrop-filter: blur(2.0px) brightness(110%);
+      -webkit-backdrop-filter: blur(2.0px) brightness(110%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 1px 0 0 rgba(255,
+          255,
+          255,
+          0.32), inset 0 -1px 1px rgba(0, 0, 0, 0.13), inset -1px 0 1px rgba(0,
+          0,
+          0,
+          0.11);
+    }
+
+    .frame .div-19 {
+      display: flex;
+      margin-top: 1px;
+      height: 108px;
+      margin-left: -16.0px;
+      width: 242px;
+      gap: 6px;
+      position: relative;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .frame .text-wrapper-11 {
+      position: relative;
+      width: fit-content;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #000000;
+      font-size: 20px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .group-4 {
+      position: absolute;
+      top: 343px;
+      left: 1007px;
+      width: 154px;
+      height: 154px;
+      background-image: url(https://c.animaapp.com/mjh8sg54WDr9Kv/img/27-5.png);
+      background-size: cover;
+      background-position: 50% 50%;
+    }
+
+    .frame .div-20 {
+      display: flex;
+      flex-direction: column;
+      width: 800px;
+      align-items: flex-start;
+      gap: 36px;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .frame .text-wrapper-12 {
+      position: relative;
+      align-self: stretch;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #000000;
+      font-size: 40px;
+      text-align: center;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .explore-our-FAQ {
+      position: relative;
+      align-self: stretch;
+      font-family: "Poppins", Helvetica;
+      font-weight: 500;
+      color: #637381;
+      font-size: 24px;
+      text-align: center;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .div-21 {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      position: relative;
+      align-self: stretch;
+      width: 100%;
+      flex: 0 0 auto;
+    }
+
+    .frame .FAQ-question {
+      display: flex;
+      width: 800px;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 24px;
+      position: relative;
+      flex: 0 0 auto;
+      border-radius: 12px;
+      border: 0.6px solid;
+      border-color: #919eab;
+    }
+
+    .frame .div-22 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      flex: 1;
+      flex-grow: 1;
+    }
+
+    .frame .div-wrapper-2 {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 16px;
+      position: relative;
+      flex: 1;
+      flex-grow: 1;
+    }
+
+    .frame .text-wrapper-13 {
+      position: relative;
+      align-self: stretch;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 500;
+      color: #000000;
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: 19.2px;
+    }
+
+    .frame .img-3 {
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .frame .FAQ-question-2 {
+      display: flex;
+      width: 800px;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 24px;
+      position: relative;
+      flex: 0 0 auto;
+      background-color: #f4f6f8;
+      border-radius: 12px;
+    }
+
+    .frame .div-23 {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: relative;
+      flex: 1;
+      flex-grow: 1;
+    }
+
+    .frame .div-24 {
+      display: flex;
+      flex-direction: column;
+      width: 702px;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 16px;
+      position: relative;
+    }
+
+    .frame .text-wrapper-14 {
+      position: relative;
+      align-self: stretch;
+      font-family: "Poppins", Helvetica;
+      font-weight: 400;
+      color: #161c24;
+      font-size: 14px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .div-25 {
+      position: relative;
+      width: 1249px;
+      height: 802px;
+      background-color: #ffffff;
+      border-radius: 36px;
+      overflow: hidden;
+      border: none;
+    }
+
+    .frame .div-25::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: 36px;
+      background: linear-gradient(116deg,
+          rgba(0, 121, 236, 1) 0%,
+          rgba(236, 246, 255, 1) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .frame .div-26 {
+      position: absolute;
+      top: 0;
+      left: -8px;
+      width: 1249px;
+      height: 515px;
+      overflow: hidden;
+      background: linear-gradient(180deg,
+          rgba(35, 148, 255, 1) 0%,
+          rgba(168, 211, 251, 1) 49%,
+          rgba(237, 246, 255, 1) 100%);
+    }
+
+    .frame .div-27 {
+      position: absolute;
+      top: 115px;
+      left: 604px;
+      width: 400px;
+      height: 400px;
+      background-color: #ffffff40;
+      border-radius: 200px;
+      opacity: 0.4;
+    }
+
+    .frame .div-28 {
+      position: absolute;
+      top: -85px;
+      left: 804px;
+      width: 400px;
+      height: 400px;
+      background-color: #ffffff40;
+      border-radius: 200px;
+      opacity: 0.4;
+    }
+
+    .frame .div-29 {
+      position: absolute;
+      top: 284px;
+      left: -85px;
+      width: 503px;
+      height: 503px;
+      background-color: #ffffff40;
+      border-radius: 251.5px;
+      opacity: 0.4;
+    }
+
+    .frame .group-5 {
+      position: absolute;
+      top: calc(50.00% - 165px);
+      left: 652px;
+      width: 366px;
+      height: 331px;
+    }
+
+    .frame .div-30 {
+      position: absolute;
+      top: 20px;
+      left: 21px;
+      width: 328px;
+      height: 74px;
+      display: flex;
+      gap: 12.2px;
+      background-color: #ffffff;
+      border-radius: 6.51px;
+      overflow: hidden;
+      border: 0.6px solid;
+      border-color: #f4f6f8;
+      transform: rotate(-7.24deg);
+      box-shadow: 0px 2px 4px #0000001a;
+    }
+
+    .frame .female-memojis-wrapper {
+      margin-top: 4.1px;
+      width: 65.87px;
+      height: 65.87px;
+      margin-left: 4.9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #faffb7;
+      border-radius: 4.88px;
+      overflow: hidden;
+    }
+
+    .frame .element-wrapper {
+      margin-top: -6.5px;
+      height: 77.25px;
+      margin-left: -0.8px;
+      width: 73.19px;
+      position: relative;
+    }
+
+    .frame .element {
+      position: absolute;
+      width: 112.50%;
+      height: 111.13%;
+      top: 6.55%;
+      left: 0;
+      transform: rotate(7.24deg);
+      object-fit: cover;
+    }
+
+    .frame .div-31 {
+      display: flex;
+      margin-top: 0.8px;
+      height: 46.51px;
+      width: 86.2px;
+      align-self: center;
+      position: relative;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6.51px;
+    }
+
+    .frame .text-wrapper-15 {
+      position: relative;
+      align-self: stretch;
+      margin-top: -0.81px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #000000;
+      font-size: 13px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .text-wrapper-16 {
+      position: relative;
+      align-self: stretch;
+      font-family: "Poppins", Helvetica;
+      font-weight: 400;
+      color: #000000;
+      font-size: 13px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .div-32 {
+      position: absolute;
+      top: 178px;
+      left: 2px;
+      width: 328px;
+      height: 74px;
+      display: flex;
+      gap: 12.2px;
+      background-color: #ffffff;
+      border-radius: 6.51px;
+      overflow: hidden;
+      border: 0.6px solid;
+      border-color: #f4f6f8;
+      transform: rotate(-3.32deg);
+      box-shadow: 0px 2px 4px #0000001a;
+    }
+
+    .frame .female-memojis-wrapper-2 {
+      margin-top: 4.1px;
+      width: 65.87px;
+      height: 65.87px;
+      margin-left: 4.9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #b7f4ff;
+      border-radius: 4.88px;
+      overflow: hidden;
+    }
+
+    .frame .img-wrapper {
+      margin-top: 6.2px;
+      height: 78px;
+      margin-left: -13.6px;
+      width: 78px;
+      position: relative;
+      transform: rotate(-0.28deg);
+    }
+
+    .frame .element-2 {
+      position: absolute;
+      width: 106.09%;
+      height: 106.09%;
+      top: 0;
+      left: 14.16%;
+      transform: rotate(3.60deg);
+      object-fit: cover;
+    }
+
+    .frame .div-33 {
+      position: absolute;
+      top: 251px;
+      left: 37px;
+      width: 328px;
+      height: 74px;
+      display: flex;
+      gap: 12.2px;
+      background-color: #ffffff;
+      border-radius: 6.51px;
+      overflow: hidden;
+      border: 0.6px solid;
+      border-color: #f4f6f8;
+      transform: rotate(2.10deg);
+      box-shadow: 0px 2px 4px #0000001a;
+    }
+
+    .frame .male-memojis-wrapper {
+      margin-top: 4.1px;
+      width: 65.87px;
+      height: 65.87px;
+      margin-left: 4.9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffb7b7;
+      border-radius: 4.88px;
+      overflow: hidden;
+    }
+
+    .frame .male-memojis-2 {
+      margin-top: 9.4px;
+      margin-left: -1.9px;
+      position: relative;
+      transform: rotate(-2.10deg);
+      height: 78px;
+      width: 78px;
+    }
+
+    .frame .element-3 {
+      position: absolute;
+      width: 100.00%;
+      height: 100.00%;
+      top: 0;
+      left: 7.72%;
+      object-fit: cover;
+    }
+
+    .frame .div-34 {
+      position: absolute;
+      top: 106px;
+      left: 26px;
+      width: 328px;
+      height: 74px;
+      display: flex;
+      gap: 12.2px;
+      background-color: #ffffff;
+      border-radius: 6.51px;
+      overflow: hidden;
+      border: 0.6px solid;
+      border-color: #f4f6f8;
+      transform: rotate(1.61deg);
+      box-shadow: 0px 2px 4px #0000001a;
+    }
+
+    .frame .div-35 {
+      margin-top: 4.1px;
+      width: 65.87px;
+      height: 65.87px;
+      margin-left: 4.9px;
+      background-color: #f6b7ff;
+      border-radius: 4.88px;
+    }
+
+    .frame .male-memojis-3 {
+      position: absolute;
+      top: 195px;
+      left: 676px;
+      background-image: url(https://c.animaapp.com/mjh8sg54WDr9Kv/img/29-5.png);
+      background-size: cover;
+      background-position: 50% 50%;
+      height: 78px;
+      width: 78px;
+    }
+
+    .frame .group-6 {
+      position: absolute;
+      top: 67px;
+      left: 73px;
+      width: 303px;
+      height: 396px;
+      background-image: url(https://c.animaapp.com/mjh8sg54WDr9Kv/img/image-16.png);
+      background-size: 100% 100%;
+    }
+
+    .frame .rectangle {
+      position: absolute;
+      top: 234px;
+      left: 24px;
+      width: 267px;
+      height: 72px;
+      background: linear-gradient(180deg,
+          rgba(252, 251, 253, 1) 0%,
+          rgba(243, 241, 240, 1) 100%);
+    }
+
+    .frame .element-4 {
+      position: absolute;
+      top: 238px;
+      left: 40px;
+      width: 234px;
+      height: 61px;
+    }
+
+    .frame .div-36 {
+      display: flex;
+      width: 1173px;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: absolute;
+      top: calc(50.00% + 144px);
+      left: calc(50.00% - 595px);
+    }
+
+    .frame .group-7 {
+      position: relative;
+      width: 512px;
+      height: 210px;
+    }
+
+    .frame .div-37 {
+      display: inline-flex;
+      gap: 20px;
+      position: relative;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .frame .div-38 {
+      display: flex;
+      flex-direction: column;
+      width: 512px;
+      align-items: flex-start;
+      gap: 6px;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .frame .ready-to-land-your {
+      position: relative;
+      align-self: stretch;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 600;
+      color: #000000;
+      font-size: 32px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .text-wrapper-17 {
+      position: relative;
+      align-self: stretch;
+      font-family: "Poppins", Helvetica;
+      font-weight: 400;
+      color: #000000;
+      font-size: 20px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .div-39 {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .frame .img-4 {
+      position: relative;
+      width: 28px;
+      height: 28px;
+    }
+
+    .frame .text-wrapper-18 {
+      position: relative;
+      width: fit-content;
+      font-family: "Poppins", Helvetica;
+      font-weight: 500;
+      color: #000000;
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .div-40 {
+      display: flex;
+      flex-direction: column;
+      width: 236px;
+      align-items: flex-start;
+      gap: 14px;
+      position: relative;
+    }
+
+    .frame .button-2 {
+      all: unset;
+      box-sizing: border-box;
+      background-color: #0079ec;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 32px;
+      position: relative;
+      align-self: stretch;
+      width: 100%;
+      flex: 0 0 auto;
+      border-radius: 50px;
+      overflow: hidden;
+      box-shadow: 0px 4px 4px #1aa6ed1a;
+    }
+
+    .frame .button-3 {
+      all: unset;
+      box-sizing: border-box;
+      border: 1px solid;
+      border-color: #0079ec;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 32px;
+      position: relative;
+      align-self: stretch;
+      width: 100%;
+      flex: 0 0 auto;
+      border-radius: 50px;
+      overflow: hidden;
+      box-shadow: 0px 4px 4px #1aa6ed1a;
+    }
+
+    .frame .text-wrapper-19 {
+      position: relative;
+      width: fit-content;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 500;
+      color: #0079ec;
+      font-size: 16px;
+      text-align: center;
+      letter-spacing: 0;
+      line-height: 21.1px;
+      white-space: nowrap;
+    }
+
+    .frame .frame-wrapper-4 {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1440px;
+      height: 115px;
+      display: flex;
+      justify-content: center;
+      background-color: #ffffff1a;
+      overflow: hidden;
+      backdrop-filter: blur(2.0px) brightness(110%);
+      -webkit-backdrop-filter: blur(2.0px) brightness(110%);
+    }
+
+    .frame .div-41 {
+      display: inline-flex;
+      margin-top: -21px;
+      width: 1281px;
+      height: 160px;
+      margin-left: -1px;
+      position: relative;
+      align-items: center;
+      gap: 123px;
+    }
+
+    .frame .element-5 {
+      position: relative;
+      width: 113px;
+      height: 115px;
+    }
+
+    .frame .navbar {
+      display: inline-flex;
+      align-items: center;
+      gap: 40px;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .frame .text-wrapper-20 {
+      position: relative;
+      width: fit-content;
+      margin-top: -1.00px;
+      font-family: "Poppins", Helvetica;
+      font-weight: 500;
+      color: #000000;
+      font-size: 20px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .frame .div-wrapper-3 {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 20px;
+      position: relative;
+      flex: 0 0 auto;
+      border-radius: 100px;
+      border: 1px solid;
+      border-color: #89c0ff;
+    }
+
+    /* FAQ Accordion Styles */
+    .faq-item {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .faq-item.active {
+      background-color: #f4f6f8;
+      border-radius: 12px;
+      border: none;
+    }
+
+    .faq-answer {
+      padding: 0 24px 24px 24px;
+      margin-top: 8px;
+    }
+
+    .faq-answer .text-wrapper-14 {
+      font-family: "Poppins", Helvetica;
+      font-weight: 400;
+      color: #161c24;
+      font-size: 14px;
+      letter-spacing: 0;
+      line-height: 1.6;
+    }
+
+    .faq-toggle-icon {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      border-radius: 50%;
+      background-color: #07070b;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .faq-item.active .faq-toggle-icon {
+      background-color: #07070b;
+    }
+  </style>
 </head>
+
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <a href="#" class="logo">
-            <img src="assets/images/logo.png" alt="EasyJobs">
-        </a>
-        <ul class="nav-menu">
-            <li><a href="#dashboard">Dashboard</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#profile">Profile</a></li>
-            <li><a href="#login" class="login-btn">Log In</a></li>
-        </ul>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <section class="hero-section">
-            <h1 class="hero-title">
-                Land Your Dream Job With AI Powered Resume Optimization
-            </h1>
-            <p class="hero-description">
-                Transform your resume into an ATS-friendly marketplace in minutes. Get past applicant tracking systems and into the interview room.
+  <div class="frame">
+    <img class="group" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/group-873.png" />
+    <div class="div">
+      <div class="div-2">
+        <div class="div-3">
+          <div class="div-4">
+            <div class="group-2">
+              <p class="land-your-dream-job">
+                Land Your Dream Job With Ai&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Powered Resume Optimization
+              </p>
+              <img class="img" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/frame-38.svg" />
+            </div>
+            <p class="text-wrapper">
+              Transform your resume into an ATS-friendly marketplace in minutes. Get post applicant tracking systems
+              and into the interview room.
             </p>
-            <a href="register.html" class="cta-button">Get Started for Free</a>
-        </section>
-    </main>
-
-    <!-- Why Choose Us Section -->
-    <div class="why-choose-wrapper">
-        <section class="why-choose-section">
-            <div>
-                <h2 class="section-title">Why Choose Us?</h2>
-                <p class="section-subtitle">Powerful features that help you stand out from the competition.</p>
-            </div>
-            
-            <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-robot"></i></div>
-                <h3 class="feature-title">AI-Powered Optimization</h3>
-                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-robot"></i></div>
-                <h3 class="feature-title">AI-Powered Optimization</h3>
-                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-robot"></i></div>
-                <h3 class="feature-title">AI-Powered Optimization</h3>
-                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-robot"></i></div>
-                <h3 class="feature-title">AI-Powered Optimization</h3>
-                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-robot"></i></div>
-                <h3 class="feature-title">AI-Powered Optimization</h3>
-                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-robot"></i></div>
-                <h3 class="feature-title">AI-Powered Optimization</h3>
-                <p class="feature-description">Smart AI analyzes and optimizes your resume with perfect keywords.</p>
-            </div>
+          </div>
+          <a href="register.html">
+            <button class="button">
+              <div class="text-wrapper-2">Get Started for Free</div>
+              <img class="img-2" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/frame-6.svg" />
+            </button>
+          </a>
         </div>
-        </section>
-    </div>
-
-    <!-- How It Works Section -->
-    <div class="how-it-works-wrapper">
-        <section class="how-it-works-section">
-            <div>
-                <h2 class="section-title">How It Works?</h2>
-            <p class="section-subtitle">Get your ATS-friendly resume in 3 Steps</p>
+        <div class="div-wrapper">
+          <div class="text-wrapper-3">Video</div>
         </div>
-        
-        <div class="steps-container">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-decorator">
-                    <svg class="star-icon" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Main 4-point star shape -->
-                        <path d="M70 5 C70 5, 76 50, 82 62 C88 68, 135 70, 135 70 C135 70, 88 72, 82 78 C76 90, 70 135, 70 135 C70 135, 64 90, 58 78 C52 72, 5 70, 5 70 C5 70, 52 68, 58 62 C64 50, 70 5, 70 5 Z" fill="#64B5F6" opacity="0.75"/>
-                        <!-- Small 4-point star at bottom left -->
-                        <path d="M30 105 C30 105, 31 100, 33 98 C35 96, 40 95, 40 95 C40 95, 35 94, 33 92 C31 90, 30 85, 30 85 C30 85, 29 90, 27 92 C25 94, 20 95, 20 95 C20 95, 25 96, 27 98 C29 100, 30 105, 30 105 Z" fill="#42A5F5" opacity="0.8"/>
-                    </svg>
-                </div>
-                <h3 class="step-title">Upload Your Resume</h3>
-                <p class="step-description">Upload your current resume in PDF, DOC, or DOCX format instantly.</p>
-            </div>
-            
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-decorator">
-                    <svg class="star-icon" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Main 4-point star shape -->
-                        <path d="M70 5 C70 5, 76 50, 82 62 C88 68, 135 70, 135 70 C135 70, 88 72, 82 78 C76 90, 70 135, 70 135 C70 135, 64 90, 58 78 C52 72, 5 70, 5 70 C5 70, 52 68, 58 62 C64 50, 70 5, 70 5 Z" fill="#64B5F6" opacity="0.75"/>
-                        <!-- Small 4-point star at bottom left -->
-                        <path d="M30 105 C30 105, 31 100, 33 98 C35 96, 40 95, 40 95 C40 95, 35 94, 33 92 C31 90, 30 85, 30 85 C30 85, 29 90, 27 92 C25 94, 20 95, 20 95 C20 95, 25 96, 27 98 C29 100, 30 105, 30 105 Z" fill="#42A5F5" opacity="0.8"/>
-                    </svg>
-                </div>
-                <h3 class="step-title">Add Job Description</h3>
-                <p class="step-description">Upload your current resume in PDF, DOC, or DOCX format instantly.</p>
-            </div>
-            
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-decorator">
-                    <svg class="star-icon" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Main 4-point star shape -->
-                        <path d="M70 5 C70 5, 76 50, 82 62 C88 68, 135 70, 135 70 C135 70, 88 72, 82 78 C76 90, 70 135, 70 135 C70 135, 64 90, 58 78 C52 72, 5 70, 5 70 C5 70, 52 68, 58 62 C64 50, 70 5, 70 5 Z" fill="#64B5F6" opacity="0.75"/>
-                        <!-- Small 4-point star at bottom left -->
-                        <path d="M30 105 C30 105, 31 100, 33 98 C35 96, 40 95, 40 95 C40 95, 35 94, 33 92 C31 90, 30 85, 30 85 C30 85, 29 90, 27 92 C25 94, 20 95, 20 95 C20 95, 25 96, 27 98 C29 100, 30 105, 30 105 Z" fill="#42A5F5" opacity="0.8"/>
-                    </svg>
-                </div>
-                <h3 class="step-title">Apply & Download</h3>
-                <p class="step-description">Upload your current resume in PDF, DOC, or DOCX format instantly.</p>
-            </div>
+      </div>
+      <div class="div-5">
+        <div class="div-6">
+          <div class="text-wrapper-4">Why Choose Us?</div>
+          <p class="p">Powerful features that help you stand out from the competition.</p>
         </div>
-        </section>
-    </div>
-
-    <!-- Footer Section -->
-    <footer class="footer-section">
-        <div class="footer-content">
-            <div class="footer-left">
-                <div class="footer-logo">
-                    <img src="assets/images/logo.png" alt="EasyJobs">
+        <div class="div-7">
+          <div class="div-8">
+            <div class="div-9">
+              <div class="div-10">
+                <div class="AI-powered">Ai-powered Optimization</div>
+                <p class="text-wrapper-5">Smart AI Analysis and optimizes your resume with perfect keywords.</p>
+              </div>
+              <img class="image" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/image-10.png" />
+            </div>
+            <div class="div-11">
+              <div class="div-10">
+                <div class="text-wrapper-6">Lightning Fast</div>
+                <p class="text-wrapper-5">Get your optimized resume ready in under 60 seconds.</p>
+              </div>
+              <img class="image-2" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/image-11.png" />
+            </div>
+          </div>
+          <div class="div-8">
+            <div class="div-12">
+              <div class="div-10">
+                <div class="ATS-score-analysis">Ats Score Analysis</div>
+                <p class="text-wrapper-5">Maximum ATS compatibility for passing tracking systems easily.</p>
+              </div>
+              <img class="image-3" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/image-12.png" />
+            </div>
+            <div class="div-13">
+              <div class="div-10">
+                <div class="text-wrapper-7">Professional Formatting</div>
+                <p class="text-wrapper-5">Beautiful PDF exports that look great and pass ATS checks.</p>
+              </div>
+              <img class="image-4" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/image-14.png" />
+            </div>
+          </div>
+          <div class="div-14">
+            <div class="div-15">
+              <div class="div-10">
+                <div class="secure-private">Secure &amp; Private</div>
+                <p class="text-wrapper-5">Bank level encryption keeps your data safe and private.</p>
+              </div>
+              <img class="image-5" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/image-13.png" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="group-3">
+        <img class="union" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/union.svg" />
+        <div class="div-16">
+          <div class="how-it-works">How It Works?</div>
+          <p class="get-your-ats">Get Your Ats-friendly Resume In 3 Steps</p>
+        </div>
+        <div class="female-memojis"></div>
+        <div class="male-memojis"></div>
+        <div class="frame-wrapper">
+          <div class="div-17">
+            <div class="text-wrapper-8">Upload Your Resume</div>
+            <p class="text-wrapper-9">Upload your current resume in PDF, DOC, or DOCX format instantly.</p>
+          </div>
+        </div>
+        <div class="frame-wrapper-2">
+          <div class="div-18">
+            <div class="apply-download">Apply &amp; Download</div>
+            <p class="text-wrapper-10">Get your optimized PDF resume instantly and start applying now.</p>
+          </div>
+        </div>
+        <div class="frame-wrapper-3">
+          <div class="div-19">
+            <div class="text-wrapper-11">Add Job Description</div>
+            <p class="text-wrapper-9">Paste the job description and let AI tailor your resume perfectly.</p>
+          </div>
+        </div>
+        <div class="group-4"></div>
+      </div>
+      <div class="div-20">
+        <div class="div-4">
+          <div class="text-wrapper-12">Frequently Asked Questions</div>
+          <p class="explore-our-FAQ">
+            Explore Our Faq Section To Find Answers To Commonly Asked Questions About Our Platform.
+          </p>
+        </div>
+        <div class="div-21">
+          <!-- FAQ 1 -->
+          <div class="FAQ-question faq-item" onclick="toggleFaq(this)">
+            <div class="div-22">
+              <div class="div-wrapper-2">
+                <div class="text-wrapper-13">What is an ATS Friendly Resume Generator?</div>
+              </div>
+              <span class="faq-toggle-icon">+</span>
+            </div>
+            <div class="faq-answer" style="display: none;">
+              <p class="text-wrapper-14">It is a web-based tool that optimizes resumes to be compatible with Applicant
+                Tracking Systems used by companies to screen job applications.</p>
+            </div>
+          </div>
+          <!-- FAQ 2 -->
+          <div class="FAQ-question faq-item" onclick="toggleFaq(this)">
+            <div class="div-22">
+              <div class="div-wrapper-2">
+                <div class="text-wrapper-13">How does this platform improve my resume for ATS systems?</div>
+              </div>
+              <span class="faq-toggle-icon">+</span>
+            </div>
+            <div class="faq-answer" style="display: none;">
+              <p class="text-wrapper-14">The platform analyzes resume content, structure, and keywords and reformats it
+                to maximize ATS readability and ranking.</p>
+            </div>
+          </div>
+          <!-- FAQ 3 -->
+          <div class="FAQ-question faq-item" onclick="toggleFaq(this)">
+            <div class="div-22">
+              <div class="div-wrapper-2">
+                <div class="text-wrapper-13">Can I upload my existing resume?</div>
+              </div>
+              <span class="faq-toggle-icon">+</span>
+            </div>
+            <div class="faq-answer" style="display: none;">
+              <p class="text-wrapper-14">Yes. You can upload your resume in PDF or Word format, and the system will
+                extract and optimize the content automatically.</p>
+            </div>
+          </div>
+          <!-- FAQ 4 -->
+          <div class="FAQ-question faq-item" onclick="toggleFaq(this)">
+            <div class="div-22">
+              <div class="div-wrapper-2">
+                <div class="text-wrapper-13">Is uploading a job description mandatory?</div>
+              </div>
+              <span class="faq-toggle-icon">+</span>
+            </div>
+            <div class="faq-answer" style="display: none;">
+              <p class="text-wrapper-14">No. Uploading a job description is optional but recommended for better keyword
+                alignment.</p>
+            </div>
+          </div>
+          <!-- FAQ 5 -->
+          <div class="FAQ-question faq-item" onclick="toggleFaq(this)">
+            <div class="div-22">
+              <div class="div-wrapper-2">
+                <div class="text-wrapper-13">How many free resume generations do I get?</div>
+              </div>
+              <span class="faq-toggle-icon">+</span>
+            </div>
+            <div class="faq-answer" style="display: none;">
+              <p class="text-wrapper-14">Each registered user receives two free resume generations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="div-25">
+        <div class="div-26">
+          <div class="div-27"></div>
+          <div class="div-28"></div>
+          <div class="div-29"></div>
+          <div class="group-5">
+            <div class="div-30">
+              <div class="female-memojis-wrapper">
+                <div class="element-wrapper">
+                  <img class="element" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/29-1-1.png" />
                 </div>
-                <p class="footer-text">
-                    Ready to Land Your Dream Job?<br>
-                    Join 100+ job seekers who have successfully optimized their resumes and landed interviews.
+              </div>
+              <div class="div-31">
+                <div class="text-wrapper-15">Lorem Ipsum</div>
+                <div class="text-wrapper-16">Lorem Ipsum</div>
+              </div>
+            </div>
+            <div class="div-32">
+              <div class="female-memojis-wrapper-2">
+                <div class="img-wrapper">
+                  <img class="element-2" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/58-4.png" />
+                </div>
+              </div>
+              <div class="div-31">
+                <div class="text-wrapper-15">Lorem Ipsum</div>
+                <div class="text-wrapper-16">Lorem Ipsum</div>
+              </div>
+            </div>
+            <div class="div-33">
+              <div class="male-memojis-wrapper">
+                <div class="male-memojis-2">
+                  <img class="element-3" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/30-10.png" />
+                </div>
+              </div>
+              <div class="div-31">
+                <div class="text-wrapper-15">Lorem Ipsum</div>
+                <div class="text-wrapper-16">Lorem Ipsum</div>
+              </div>
+            </div>
+            <div class="div-34">
+              <div class="div-35"></div>
+              <div class="div-31">
+                <div class="text-wrapper-15">Lorem Ipsum</div>
+                <div class="text-wrapper-16">Lorem Ipsum</div>
+              </div>
+            </div>
+          </div>
+          <div class="male-memojis-3"></div>
+          <div class="group-6">
+            <div class="rectangle"></div>
+            <img class="element-4" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/6.png" />
+          </div>
+        </div>
+        <div class="div-36">
+          <div class="group-7">
+            <div class="div-37">
+              <div class="div-38">
+                <p class="ready-to-land-your">Ready To Land Your Dream Job?</p>
+                <p class="text-wrapper-17">
+                  Join 1000s of job seekers who have successfully optimized their resumes with EasyJobs.
                 </p>
-                <div class="footer-highlight">
-                    Get 3 free credits when you sign up today.
-                </div>
+              </div>
+              <div class="div-39">
+                <img class="img-4" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/frame-1.svg" />
+                <p class="text-wrapper-18">Get 3 free credits when you sign up today.</p>
+              </div>
             </div>
-            <div class="footer-buttons">
-                <a href="register.html" class="footer-btn-primary">Create Free Account</a>
-                <a href="payment.html" class="footer-btn-secondary">View Pricing</a>
-            </div>
+          </div>
+          <div class="div-40">
+            <a href="register.html"><button class="button-2">
+                <div class="text-wrapper-2">Create Free Account</div>
+              </button></a>
+            <a href="payment.html"><button class="button-3">
+                <div class="text-wrapper-19">View Pricing</div>
+              </button></a>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
+    <div class="frame-wrapper-4">
+      <div class="div-41">
+        <img class="element-5" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/8.png" />
+        <div class="navbar">
+          <a href="dashboard.html" class="text-wrapper-20">Dashboard</a>
+          <a href="dashboard.html" class="text-wrapper-20">Resume Generator</a>
+          <a href="coverletter.html" class="text-wrapper-20">Cover Letter Generator</a>
+          <a href="payment.html" class="text-wrapper-20">Pricing</a>
+          <a href="profile.html" class="text-wrapper-20">Profile</a>
+        </div>
+        <a href="index.html" id="authBtn" class="div-wrapper-3">
+          <div class="text-wrapper-20" id="authBtnText">Log In</div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Check if user is authenticated with proper token validation
+    function isAuthenticated() {
+      const authToken = localStorage.getItem('authToken');
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+      // Check if both values exist
+      if (!authToken || !isLoggedIn || isLoggedIn !== 'true') {
+        return false;
+      }
+
+      // Validate token format (should be JWT-like with dots)
+      if (!authToken.includes('.')) {
+        // Invalid token format - clear stale auth data
+        console.log('Invalid token format detected - clearing auth data');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userData');
+        return false;
+      }
+
+      return true;
+    }
+
+    // Handle protected link clicks - check auth before navigating
+    function handleProtectedLink(e, targetUrl) {
+      if (!isAuthenticated()) {
+        e.preventDefault();
+        // Store the intended destination for after login
+        sessionStorage.setItem('redirectAfterLogin', targetUrl);
+        alert('Please log in to access this feature.');
+        window.location.href = 'index.html';
+        return false;
+      }
+      return true;
+    }
+
+    // Setup protected links on page load
+    function setupProtectedLinks() {
+      // Get all navbar links that need protection
+      const protectedPages = ['dashboard.html', 'coverletter.html', 'profile.html'];
+      const navbarLinks = document.querySelectorAll('.navbar a');
+
+      navbarLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (protectedPages.some(page => href && href.includes(page))) {
+          link.addEventListener('click', function (e) {
+            handleProtectedLink(e, href);
+          });
+        }
+      });
+    }
+
+    // Check authentication state and update button
+    function updateAuthButton() {
+      const authBtn = document.getElementById('authBtn');
+      const authBtnText = document.getElementById('authBtnText');
+
+      if (isAuthenticated()) {
+        authBtnText.textContent = 'Log Out';
+        authBtn.href = '#';
+        authBtn.onclick = function (e) {
+          e.preventDefault();
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('userData');
+          window.location.reload();
+        };
+      } else {
+        authBtnText.textContent = 'Log In';
+        authBtn.href = 'index.html';
+        authBtn.onclick = null;
+      }
+    }
+
+    // Run on page load
+    updateAuthButton();
+    setupProtectedLinks();
+
+    function toggleFaq(element) {
+      const answer = element.querySelector('.faq-answer');
+      const icon = element.querySelector('.faq-toggle-icon');
+      const isActive = element.classList.contains('active');
+
+      // Close all other FAQs and reset their icons to plus
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
+        item.querySelector('.faq-answer').style.display = 'none';
+        item.querySelector('.faq-toggle-icon').textContent = '+';
+      });
+
+      // Toggle current FAQ
+      if (!isActive) {
+        element.classList.add('active');
+        answer.style.display = 'block';
+        icon.textContent = '−';
+      }
+    }
+  </script>
 </body>
+
 </html>

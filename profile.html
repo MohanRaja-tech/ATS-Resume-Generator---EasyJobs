@@ -632,15 +632,16 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="logo">
+        <a href="landing.html" class="logo">
             <img src="assets/images/logo.png" alt="EasyJobs Logo" style="height: 50px; width: auto;">
-        </div>
+        </a>
         <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
         <nav id="navLinks">
             <a href="dashboard.html">Dashboard</a>
+            <a href="coverletter.html">Cover Letter</a>
             <a href="payment.html">Pricing</a>
             <a href="profile.html" class="active">Profile</a>
-            <a href="index.html">Log In</a>
+            <a href="#" id="logoutBtn">Log Out</a>
         </nav>
     </header>
 
@@ -969,6 +970,16 @@
                 localStorage.removeItem('isLoggedIn');
                 window.location.href = 'index.html';
             }
+        });
+
+        // Handle logout from nav button
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('token');
+            localStorage.removeItem('userData');
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
         });
     </script>
     <script src="js/profile.js"></script>
