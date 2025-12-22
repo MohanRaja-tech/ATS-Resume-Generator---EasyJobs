@@ -757,15 +757,28 @@
 
     .frame .FAQ-question {
       display: flex;
+      flex-direction: column;
       width: 800px;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 24px;
       position: relative;
       flex: 0 0 auto;
       border-radius: 12px;
-      border: 0.6px solid;
-      border-color: #919eab;
+      border: 1px solid #E5E7EB;
+      background: white;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .frame .faq-question-header {
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .frame .faq-question-header:hover {
+      background: #F9FAFB;
     }
 
     .frame .div-22 {
@@ -1393,13 +1406,18 @@
 
     .faq-item.active {
       background-color: #f4f6f8;
-      border-radius: 12px;
-      border: none;
     }
 
     .faq-answer {
-      padding: 0 24px 24px 24px;
-      margin-top: 8px;
+      padding: 0 24px 20px 24px;
+      color: #666666;
+      font-size: 14px;
+      line-height: 1.6;
+      display: none;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
     }
 
     .faq-answer .text-wrapper-14 {
@@ -1548,66 +1566,52 @@
         </div>
         <div class="div-21">
           <!-- FAQ 1 -->
-          <div class="FAQ-question faq-item" onclick="toggleFaq(this)">
-            <div class="div-22">
-              <div class="div-wrapper-2">
-                <div class="text-wrapper-13">What is an ATS Friendly Resume Generator?</div>
-              </div>
+          <div class="FAQ-question faq-item">
+            <div class="faq-question-header" onclick="toggleFaq(this.parentElement)">
+              <span class="text-wrapper-13">What is an ATS Friendly Resume Generator?</span>
               <span class="faq-toggle-icon">+</span>
             </div>
-            <div class="faq-answer" style="display: none;">
-              <p class="text-wrapper-14">It is a web-based tool that optimizes resumes to be compatible with Applicant
-                Tracking Systems used by companies to screen job applications.</p>
+            <div class="faq-answer">
+              <p class="text-wrapper-14">It is a web-based tool that optimizes resumes to be compatible with Applicant Tracking Systems used by companies to screen job applications.</p>
             </div>
           </div>
           <!-- FAQ 2 -->
-          <div class="FAQ-question faq-item" onclick="toggleFaq(this)">
-            <div class="div-22">
-              <div class="div-wrapper-2">
-                <div class="text-wrapper-13">How does this platform improve my resume for ATS systems?</div>
-              </div>
+          <div class="FAQ-question faq-item">
+            <div class="faq-question-header" onclick="toggleFaq(this.parentElement)">
+              <span class="text-wrapper-13">How does this platform improve my resume for ATS systems?</span>
               <span class="faq-toggle-icon">+</span>
             </div>
-            <div class="faq-answer" style="display: none;">
-              <p class="text-wrapper-14">The platform analyzes resume content, structure, and keywords and reformats it
-                to maximize ATS readability and ranking.</p>
+            <div class="faq-answer">
+              <p class="text-wrapper-14">The platform analyzes resume content, structure, and keywords and reformats it to maximize ATS readability and ranking.</p>
             </div>
           </div>
           <!-- FAQ 3 -->
-          <div class="FAQ-question faq-item" onclick="toggleFaq(this)">
-            <div class="div-22">
-              <div class="div-wrapper-2">
-                <div class="text-wrapper-13">Can I upload my existing resume?</div>
-              </div>
+          <div class="FAQ-question faq-item">
+            <div class="faq-question-header" onclick="toggleFaq(this.parentElement)">
+              <span class="text-wrapper-13">Can I upload my existing resume?</span>
               <span class="faq-toggle-icon">+</span>
             </div>
-            <div class="faq-answer" style="display: none;">
-              <p class="text-wrapper-14">Yes. You can upload your resume in PDF or Word format, and the system will
-                extract and optimize the content automatically.</p>
+            <div class="faq-answer">
+              <p class="text-wrapper-14">Yes. You can upload your resume in PDF or Word format, and the system will extract and optimize the content automatically.</p>
             </div>
           </div>
           <!-- FAQ 4 -->
-          <div class="FAQ-question faq-item" onclick="toggleFaq(this)">
-            <div class="div-22">
-              <div class="div-wrapper-2">
-                <div class="text-wrapper-13">Is uploading a job description mandatory?</div>
-              </div>
+          <div class="FAQ-question faq-item">
+            <div class="faq-question-header" onclick="toggleFaq(this.parentElement)">
+              <span class="text-wrapper-13">Is uploading a job description mandatory?</span>
               <span class="faq-toggle-icon">+</span>
             </div>
-            <div class="faq-answer" style="display: none;">
-              <p class="text-wrapper-14">No. Uploading a job description is optional but recommended for better keyword
-                alignment.</p>
+            <div class="faq-answer">
+              <p class="text-wrapper-14">No. Uploading a job description is optional but recommended for better keyword alignment.</p>
             </div>
           </div>
           <!-- FAQ 5 -->
-          <div class="FAQ-question faq-item" onclick="toggleFaq(this)">
-            <div class="div-22">
-              <div class="div-wrapper-2">
-                <div class="text-wrapper-13">How many free resume generations do I get?</div>
-              </div>
+          <div class="FAQ-question faq-item">
+            <div class="faq-question-header" onclick="toggleFaq(this.parentElement)">
+              <span class="text-wrapper-13">How many free resume generations do I get?</span>
               <span class="faq-toggle-icon">+</span>
             </div>
-            <div class="faq-answer" style="display: none;">
+            <div class="faq-answer">
               <p class="text-wrapper-14">Each registered user receives two free resume generations.</p>
             </div>
           </div>
@@ -1788,21 +1792,18 @@
     setupProtectedLinks();
 
     function toggleFaq(element) {
-      const answer = element.querySelector('.faq-answer');
       const icon = element.querySelector('.faq-toggle-icon');
       const isActive = element.classList.contains('active');
 
       // Close all other FAQs and reset their icons to plus
       document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
-        item.querySelector('.faq-answer').style.display = 'none';
         item.querySelector('.faq-toggle-icon').textContent = '+';
       });
 
       // Toggle current FAQ
       if (!isActive) {
         element.classList.add('active');
-        answer.style.display = 'block';
         icon.textContent = '−';
       }
     }

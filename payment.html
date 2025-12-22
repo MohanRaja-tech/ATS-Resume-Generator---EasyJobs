@@ -706,47 +706,47 @@
                     <div class="faq-icon">+</div>
                 </div>
                 <div class="faq-answer">
-                    Each credit allows you to generate one optimized resume. Credits are deducted from your account when you successfully generate a resume. You can purchase more credits anytime.
-                </div>
-            </div>
-
-            <div class="faq-item active">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>How do credits work?</span>
-                    <div class="faq-icon">+</div>
-                </div>
-                <div class="faq-answer">
-                    Explore our FAQ section to find answers to commonly asked questions about our platform. Explore our FAQ section to find answers to commonly asked questions about our platform. Explore our FAQ section to find answers to commonly asked questions about our platform.
+                    Each credit allows you to generate one optimized resume or cover letter. Credits are deducted from your account when you successfully generate a document. You can purchase more credits anytime from this pricing page.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>How do credits work?</span>
+                    <span>How many free credits do I get when I sign up?</span>
                     <div class="faq-icon">+</div>
                 </div>
                 <div class="faq-answer">
-                    Each credit allows you to generate one optimized resume. Credits are deducted from your account when you successfully generate a resume.
+                    Each registered user receives 2 free credits upon signing up. These credits can be used to generate ATS-optimized resumes or cover letters to help you get started with our platform.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>How do credits work?</span>
+                    <span>Do credits expire?</span>
                     <div class="faq-icon">+</div>
                 </div>
                 <div class="faq-answer">
-                    Each credit allows you to generate one optimized resume. Credits are deducted from your account when you successfully generate a resume.
+                    No, your credits never expire! Once you purchase credits, they remain in your account until you use them. You can use them whenever you need to generate a new resume or cover letter.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>How do credits work?</span>
+                    <span>Can I use credits for both resumes and cover letters?</span>
                     <div class="faq-icon">+</div>
                 </div>
                 <div class="faq-answer">
-                    Each credit allows you to generate one optimized resume. Credits are deducted from your account when you successfully generate a resume.
+                    Yes! Credits are universal and can be used for generating either ATS-optimized resumes or AI-powered cover letters. Each generation costs 1 credit regardless of the document type.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What payment methods do you accept?</span>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">
+                    We accept all major payment methods through Razorpay including credit cards, debit cards, UPI, net banking, and popular wallets. All transactions are secure and encrypted.
                 </div>
             </div>
         </section>
@@ -762,15 +762,21 @@
         // FAQ Toggle
         function toggleFAQ(element) {
             const faqItem = element.parentElement;
+            const faqIcon = element.querySelector('.faq-icon');
             const allItems = document.querySelectorAll('.faq-item');
+            const isActive = faqItem.classList.contains('active');
             
+            // Close all FAQs and reset icons to plus
             allItems.forEach(item => {
-                if (item !== faqItem) {
-                    item.classList.remove('active');
-                }
+                item.classList.remove('active');
+                item.querySelector('.faq-icon').textContent = '+';
             });
             
-            faqItem.classList.toggle('active');
+            // Toggle current FAQ
+            if (!isActive) {
+                faqItem.classList.add('active');
+                faqIcon.textContent = '−';
+            }
         }
     </script>
     <script src="js/payment.js"></script>
