@@ -666,7 +666,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -674,6 +674,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
         }
 
         .modal.show {
@@ -682,33 +683,71 @@
         }
 
         .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 40px;
+            border-radius: 20px;
             text-align: center;
-            max-width: 400px;
+            max-width: 420px;
             width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .modal-icon svg {
+            width: 35px;
+            height: 35px;
+            color: white;
         }
 
         .modal-content h3 {
-            color: #333;
-            margin-bottom: 15px;
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 22px;
+            font-weight: 600;
         }
 
         .modal-content p {
-            color: #666;
-            margin-bottom: 20px;
+            color: #6b7280;
+            margin-bottom: 28px;
+            font-size: 15px;
+            line-height: 1.5;
         }
 
         .modal-buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
         }
 
         .btn-secondary {
-            background: #f5f5f5;
-            color: #666;
+            background: #f3f4f6;
+            color: #4b5563;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
         }
 
         /* Hide file inputs */
@@ -835,12 +874,16 @@
             <div class="stats-left">
                 <div class="stat-box">
                     <div class="stat-label">Cover Letters Generated:</div>
-                    <div class="stat-number" id="coverlettersGenerated">0</div>
+                    <div class="stat-number" id="coverlettersGenerated">--</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-label">Credits Used:</div>
-                    <div class="stat-number" id="creditsUsed">0</div>
+                    <div class="stat-number" id="creditsUsed">--</div>
                 </div>
+            </div>
+            <div class="balance-section">
+                <div class="balance-label">Credits Remaining:</div>
+                <div class="balance-amount"><span id="creditsRemaining">--</span> Credits</div>
             </div>
         </div>
     </section>
@@ -848,7 +891,7 @@
     <!-- Main Content -->
     <main class="main-content">
         <p class="upload-instruction">Upload your resume and add a job description for better keyword alignment.</p>
-        <h2 class="main-title">Lorem ipsum - Optimized Cover Letter</h2>
+        <h2 class="main-title">Generate Your AI-Powered Cover Letter</h2>
 
         <form id="coverLetterForm">
             <div class="upload-section">
@@ -1028,10 +1071,17 @@
     <!-- Success Modal -->
     <div id="successModal" class="modal">
         <div class="modal-content">
-            <h3>🎉 Cover Letter Generated Successfully!</h3>
-            <p>Your AI-powered cover letter is ready for download.</p>
+            <div class="modal-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3>Cover Letter Generated Successfully!</h3>
+            <p>Your AI-powered cover letter is ready. Download it now and make a great first impression.</p>
             <div class="modal-buttons">
-                <button onclick="downloadFromModal()" class="btn btn-primary">Download Cover Letter</button>
+                <button onclick="downloadFromModal()" class="btn btn-primary">
+                    <i class="fas fa-download" style="margin-right: 8px;"></i>Download Cover Letter
+                </button>
                 <button onclick="closeSuccessModal()" class="btn btn-secondary">Close</button>
             </div>
         </div>
@@ -1046,7 +1096,7 @@
             window.location.href = 'index.html';
         }
 
-        // Load user data
+        // Load user data from API
         async function loadUserData() {
             try {
                 // Try to load from localStorage first (faster)
@@ -1054,8 +1104,14 @@
                 if (userData.name) {
                     document.getElementById('userName').textContent = userData.name;
                 }
+                if (userData.credits !== undefined) {
+                    document.getElementById('creditsRemaining').textContent = userData.credits || 0;
+                }
+                if (userData.creditsUsed !== undefined) {
+                    document.getElementById('creditsUsed').textContent = userData.creditsUsed || 0;
+                }
 
-                // Then try to fetch from API for latest data
+                // Fetch latest data from API
                 const response = await fetch('/api/user/profile', {
                     headers: {
                         'Authorization': `Bearer ${authToken}`
@@ -1064,7 +1120,26 @@
 
                 if (response.ok) {
                     const data = await response.json();
+                    console.log('Profile data:', data);
+
+                    // Update UI with API data
                     document.getElementById('userName').textContent = data.name || 'User';
+                    document.getElementById('creditsRemaining').textContent = data.credits || 0;
+                    document.getElementById('creditsUsed').textContent = data.credits_used || 0;
+
+                    // Update cover letters generated (use 0 for now, can be updated when cover letter API is added)
+                    // document.getElementById('coverlettersGenerated').textContent = data.coverletters_generated || 0;
+
+                    // Update localStorage with fresh data
+                    const updatedUserData = {
+                        ...userData,
+                        name: data.name,
+                        credits: data.credits,
+                        creditsUsed: data.credits_used,
+                        creditsPurchased: data.credits_purchased
+                    };
+                    localStorage.setItem('userData', JSON.stringify(updatedUserData));
+
                 } else if (response.status === 401) {
                     // Token expired or invalid
                     localStorage.removeItem('authToken');

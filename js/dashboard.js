@@ -25,17 +25,17 @@ function checkAuth() {
             return false;
         }
 
-        // Set demo data if not exists (for migration from old system)
+        // Initialize empty userData if not exists (actual data will be fetched from API)
         if (!localStorage.getItem('userData')) {
-            const demoUserData = {
-                email: 'demo@easyjobs.com',
-                name: 'Demo User',
-                credits: 5,
-                resumesGenerated: 0,
-                creditsUsed: 0,
-                memberSince: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+            const emptyUserData = {
+                email: '',
+                name: 'User',
+                credits: null,
+                resumesGenerated: null,
+                creditsUsed: null,
+                memberSince: ''
             };
-            localStorage.setItem('userData', JSON.stringify(demoUserData));
+            localStorage.setItem('userData', JSON.stringify(emptyUserData));
         }
 
         // Set auth flags if not exists  
@@ -60,8 +60,8 @@ function checkAuth() {
 // Initialize dashboard
 checkAuth();
 
-// Load user data
-function loadUserData() {
+// Load user data from API
+async function loadUserData() {
     try {
         const userData = JSON.parse(localStorage.getItem('userData') || '{}');
 
@@ -71,10 +71,50 @@ function loadUserData() {
         const resumesGeneratedEl = document.getElementById('resumesGenerated');
         const creditsUsedEl = document.getElementById('creditsUsed');
 
+        // Display cached data first for fast UI update
         if (userNameEl) userNameEl.textContent = userData.name || 'User';
-        if (creditsRemainingEl) creditsRemainingEl.textContent = userData.credits || 0;
-        if (resumesGeneratedEl) resumesGeneratedEl.textContent = userData.resumesGenerated || 0;
-        if (creditsUsedEl) creditsUsedEl.textContent = userData.creditsUsed || 0;
+        if (creditsRemainingEl && userData.credits !== undefined) creditsRemainingEl.textContent = userData.credits;
+        if (resumesGeneratedEl && userData.resumesGenerated !== undefined) resumesGeneratedEl.textContent = userData.resumesGenerated;
+        if (creditsUsedEl && userData.creditsUsed !== undefined) creditsUsedEl.textContent = userData.creditsUsed;
+
+        // Fetch latest data from API
+        const authToken = localStorage.getItem('authToken');
+        if (authToken) {
+            const response = await fetch('/api/user/profile', {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Profile data from API:', data);
+
+                // Update UI with fresh data from database
+                if (userNameEl) userNameEl.textContent = data.name || 'User';
+                if (creditsRemainingEl) creditsRemainingEl.textContent = data.credits || 0;
+                if (resumesGeneratedEl) resumesGeneratedEl.textContent = data.resumes_generated || 0;
+                if (creditsUsedEl) creditsUsedEl.textContent = data.credits_used || 0;
+
+                // Update localStorage with fresh data
+                const updatedUserData = {
+                    ...userData,
+                    name: data.name,
+                    email: data.email,
+                    credits: data.credits,
+                    resumesGenerated: data.resumes_generated,
+                    creditsUsed: data.credits_used,
+                    creditsPurchased: data.credits_purchased
+                };
+                localStorage.setItem('userData', JSON.stringify(updatedUserData));
+            } else if (response.status === 401) {
+                console.log('Session expired - redirecting to login');
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userData');
+                window.location.href = 'index.html';
+            }
+        }
 
         // Load resume history
         loadResumeHistory();

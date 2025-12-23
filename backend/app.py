@@ -5,6 +5,7 @@ from database import Database
 from routes.auth_routes import auth_bp
 from routes.user_routes import user_bp
 from routes.resume_routes import resume_bp
+from routes.payment_routes import payment_bp
 import os
 
 def create_app():
@@ -34,13 +35,14 @@ def create_app():
     try:
         Database.initialize()
     except Exception as db_error:
-        print(f"⚠️  Database initialization failed: {str(db_error)}")
-        print("⚠️  Running without database functionality")
+        print(f"[WARNING] Database initialization failed: {str(db_error)}")
+        print("[WARNING] Running without database functionality")
     
     # Register blueprints
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(user_bp, url_prefix='/api/user')
     app.register_blueprint(resume_bp, url_prefix='/api/resume')
+    app.register_blueprint(payment_bp, url_prefix='/api/payment')
     
     # Serve frontend - Root endpoint serves landing page
     @app.route('/')
@@ -106,19 +108,21 @@ def create_app():
 if __name__ == '__main__':
     app = create_app()
     print(f"\n{'='*60}")
-    print(f"🚀 Resume Generator - Full Stack Application")
+    print(f"Resume Generator - Full Stack Application")
     print(f"{'='*60}")
     print(f"Environment: {Config.ENV}")
     print(f"Debug Mode: {Config.DEBUG}")
-    print(f"\n📱 Frontend & API Server:")
-    print(f"   🌐 http://localhost:{Config.PORT}")
-    print(f"   🌐 http://127.0.0.1:{Config.PORT}")
-    print(f"\n📡 API Endpoints:")
+    print(f"\nFrontend & API Server:")
+    print(f"   http://localhost:{Config.PORT}")
+    print(f"   http://127.0.0.1:{Config.PORT}")
+    print(f"\nAPI Endpoints:")
     print(f"   POST /api/auth/register")
     print(f"   POST /api/auth/login")
     print(f"   POST /api/auth/logout")
     print(f"   GET  /api/health")
-    print(f"\n💾 Database: {Config.MONGODB_DB_NAME}")
+    print(f"   GET  /api/payment/credits")
+    print(f"   POST /api/payment/add-credits")
+    print(f"\nDatabase: {Config.MONGODB_DB_NAME}")
     print(f"{'='*60}\n")
     
     app.run(

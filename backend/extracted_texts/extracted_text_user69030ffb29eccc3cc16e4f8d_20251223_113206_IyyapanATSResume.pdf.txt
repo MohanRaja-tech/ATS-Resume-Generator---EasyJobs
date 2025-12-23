@@ -1,0 +1,76 @@
+EXTRACTED RESUME TEXT
+==================================================
+Original Filename: Iyyapan ATS Resume.pdf
+User ID: 69030ffb29eccc3cc16e4f8d
+Extraction Timestamp: 2025-12-23 11:32:06
+==================================================
+
+RESUME TEXT:
+------------------------------
+IYYAPPAN R
+MERN Stack Developer
+iyyappan281105@gmail.com — +91 90438 98589
+iyyappan10-portfolio.vercel.app — github.com/IYYAPPAN10R
+linkedin.com/in/iyyappan–r/ — leetcode.com/u/IYYAPPAN–R/
+Professional Summary
+Enthusiastic and adaptable software developer with technical expertise in MERN stack development. Skilled in build-
+ing full-stack web applications with focus on object-oriented programming and database management. Demonstrated
+problem-solving capabilities with 250+ LeetCode solutions. Keen to apply technical knowledge to real-world challenges
+with strong commitment to continuous learning and collaborative team environments.
+Education
+Bachelor of Technology in Information Technology Erode, Tamil Nadu
+Kongu Engineering College 2023 - 2027
+• Current CGPA: 8.48*
+• RelevantCoursework: Object-OrientedProgramming,DatabaseManagementSystems,ComputerOrganization,Com-
+puter Networks
+Higher Secondary Certificate (HSC) 2022 - 2023
+Sakthi School 88%
+Secondary School Leaving Certificate (SSLC) 2020 - 2021
+Sakthi School
+Technical Skills
+• Programming Languages: Java, C, C++
+• Frontend Technologies: React.js, HTML5, CSS3
+• Backend Technologies: Node.js, Express.js
+• Databases: MongoDB, MySQL
+• MERN Stack: MongoDB, Express.js, React.js, Node.js
+• Version Control: Git, GitHub
+• Core Competencies: Object-Oriented Programming, Database Management Systems, Full-Stack Development
+Projects
+College Bus Management System July 2025 - Aug 2025
+• Developed a comprehensive system to manage bus routes, schedules, and student registrations efficiently
+• Implemented real-time tracking capabilities for improved route management
+• Streamlined fee and payment management modules for students and administrators
+• Technology Stack: MERN (MongoDB, Express.js, React.js, Node.js)
+Travel Bill Splitter Feb 2025 - May 2025
+• Built a user-friendly platform to split group travel expenses equitably among participants
+• Integrated expense tracking functionality for transparent financial management
+• Developed balance settlement features with intuitive user interface
+• Technology Stack: MERN (MongoDB, Express.js, React.js, Node.js)
+Online Learning Platform Nov 2024 - Jan 2025
+• Designed and implemented a comprehensive learning platform with course enrollment functionality
+• Integrated video lecture delivery and interactive quiz modules for enhanced learning experience
+• Implemented role-based access control for students and instructors with seamless navigation
+• Technology Stack: MERN (MongoDB, Express.js, React.js, Node.js)
+Achievements/Awards
+• Secured 84 percentile in JEE Mains 2023 Examination
+• Secured Second Prize in Hackathon at SNS College of Technology for “Object Detection Problem-Solving using AI”
+project
+• Solved 250+ algorithmic problems on LeetCode focusing on Data Structures and Algorithms
+Certifications
+• Introduction to Cloud Computing - Coursera (IBM), Nov 2024
+• Oracle APEX Cloud Developer Certified Professional - June 2025
+Soft Skills
+• Team Collaboration
+• Time Management
+• Problem-Solving
+• Creativity
+• Adaptability
+
+==================================================
+JOB DESCRIPTION:
+------------------------------
+
+
+==================================================
+Extraction completed successfully!
+Total characters extracted: 3050

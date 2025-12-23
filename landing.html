@@ -19,7 +19,7 @@
       height: 100%;
     }
 
-    /* a blue color as a generic focus style */
+    /* a blue color as a genericso focus style */
     button:focus-visible {
       outline: 2px solid #4a90e2 !important;
       outline: -webkit-focus-ring-color auto 5px !important;
@@ -1365,14 +1365,14 @@
     }
 
     .frame .div-41 {
-      display: inline-flex;
+      display: flex;
       margin-top: -21px;
       width: 1281px;
       height: 160px;
       margin-left: -1px;
       position: relative;
       align-items: center;
-      gap: 123px;
+      justify-content: space-between;
     }
 
     .frame .element-5 {
@@ -1387,6 +1387,12 @@
       gap: 40px;
       position: relative;
       flex: 0 0 auto;
+    }
+
+    .frame .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 40px;
     }
 
     .frame .text-wrapper-20 {
@@ -1595,7 +1601,8 @@
               <span class="faq-toggle-icon">+</span>
             </div>
             <div class="faq-answer">
-              <p class="text-wrapper-14">It is a web-based tool that optimizes resumes to be compatible with Applicant Tracking Systems used by companies to screen job applications.</p>
+              <p class="text-wrapper-14">It is a web-based tool that optimizes resumes to be compatible with Applicant
+                Tracking Systems used by companies to screen job applications.</p>
             </div>
           </div>
           <!-- FAQ 2 -->
@@ -1605,7 +1612,8 @@
               <span class="faq-toggle-icon">+</span>
             </div>
             <div class="faq-answer">
-              <p class="text-wrapper-14">The platform analyzes resume content, structure, and keywords and reformats it to maximize ATS readability and ranking.</p>
+              <p class="text-wrapper-14">The platform analyzes resume content, structure, and keywords and reformats it
+                to maximize ATS readability and ranking.</p>
             </div>
           </div>
           <!-- FAQ 3 -->
@@ -1615,7 +1623,8 @@
               <span class="faq-toggle-icon">+</span>
             </div>
             <div class="faq-answer">
-              <p class="text-wrapper-14">Yes. You can upload your resume in PDF or Word format, and the system will extract and optimize the content automatically.</p>
+              <p class="text-wrapper-14">Yes. You can upload your resume in PDF or Word format, and the system will
+                extract and optimize the content automatically.</p>
             </div>
           </div>
           <!-- FAQ 4 -->
@@ -1625,7 +1634,8 @@
               <span class="faq-toggle-icon">+</span>
             </div>
             <div class="faq-answer">
-              <p class="text-wrapper-14">No. Uploading a job description is optional but recommended for better keyword alignment.</p>
+              <p class="text-wrapper-14">No. Uploading a job description is optional but recommended for better keyword
+                alignment.</p>
             </div>
           </div>
           <!-- FAQ 5 -->
@@ -1653,8 +1663,8 @@
                 </div>
               </div>
               <div class="div-31">
-                <div class="text-wrapper-15">Lorem Ipsum</div>
-                <div class="text-wrapper-16">Lorem Ipsum</div>
+                <div class="text-wrapper-15">Amazing Product</div>
+                <div class="text-wrapper-16"></div>
               </div>
             </div>
             <div class="div-32">
@@ -1664,8 +1674,8 @@
                 </div>
               </div>
               <div class="div-31">
-                <div class="text-wrapper-15">Lorem Ipsum</div>
-                <div class="text-wrapper-16">Lorem Ipsum</div>
+                <div class="text-wrapper-15">Fantastic</div>
+                <div class="text-wrapper-16"></div>
               </div>
             </div>
             <div class="div-33">
@@ -1675,15 +1685,15 @@
                 </div>
               </div>
               <div class="div-31">
-                <div class="text-wrapper-15">Lorem Ipsum</div>
-                <div class="text-wrapper-16">Lorem Ipsum</div>
+                <div class="text-wrapper-15">Super Easy</div>
+                <div class="text-wrapper-16"></div>
               </div>
             </div>
             <div class="div-34">
               <div class="div-35"></div>
               <div class="div-31">
-                <div class="text-wrapper-15">Lorem Ipsum</div>
-                <div class="text-wrapper-16">Lorem Ipsum</div>
+                <div class="text-wrapper-15">Game Changer</div>
+                <div class="text-wrapper-16"></div>
               </div>
             </div>
           </div>
@@ -1722,16 +1732,15 @@
     <div class="frame-wrapper-4">
       <div class="div-41">
         <img class="element-5" src="https://c.animaapp.com/mjh8sg54WDr9Kv/img/8.png" />
-        <div class="navbar">
-          <a href="dashboard.html" class="text-wrapper-20">Dashboard</a>
-          <a href="dashboard.html" class="text-wrapper-20">Resume Generator</a>
-          <a href="coverletter.html" class="text-wrapper-20">Cover Letter Generator</a>
-          <a href="payment.html" class="text-wrapper-20">Pricing</a>
-          <a href="profile.html" class="text-wrapper-20">Profile</a>
+        <div class="nav-right">
+          <div class="navbar">
+            <a href="dashboard.html" class="text-wrapper-20">Resume Generator</a>
+            <a href="coverletter.html" class="text-wrapper-20">Cover Letter Generator</a>
+          </div>
+          <a href="index.html" id="authBtn" class="div-wrapper-3">
+            <div class="text-wrapper-20" id="authBtnText">Log In</div>
+          </a>
         </div>
-        <a href="index.html" id="authBtn" class="div-wrapper-3">
-          <div class="text-wrapper-20" id="authBtnText">Log In</div>
-        </a>
       </div>
     </div>
   </div>

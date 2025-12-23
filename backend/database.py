@@ -31,18 +31,18 @@ class Database:
             # Create indexes
             Database.db.users.create_index('email', unique=True)
             
-            print(f"✓ Connected to MongoDB: {Config.MONGODB_DATABASE}")
+            print(f"[OK] Connected to MongoDB: {Config.MONGODB_DATABASE}")
             return True
             
         except ConnectionFailure as e:
             print(f"✗ MongoDB connection failed: {str(e)}")
-            print("⚠️  The application will run with limited functionality")
+            print("[WARNING] The application will run with limited functionality")
             Database.client = None
             Database.db = None
             return False
         except Exception as e:
             print(f"✗ Database initialization error: {str(e)}")
-            print("⚠️  The application will run with limited functionality")
+            print("[WARNING] The application will run with limited functionality")
             Database.client = None
             Database.db = None
             return False
@@ -59,4 +59,4 @@ class Database:
         """Close database connection"""
         if Database.client:
             Database.client.close()
-            print("✓ MongoDB connection closed")
+            print("[OK] MongoDB connection closed")

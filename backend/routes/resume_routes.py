@@ -122,7 +122,7 @@ def send_to_aws_api(resume_text, job_description, api_url):
                 else:
                     pdf_data = str(base64_pdf)
                 
-                print("✓ Successfully received base64 PDF data")
+                print("[OK] Successfully received base64 PDF data")
                 return pdf_data
                 
             except json.JSONDecodeError as e:
@@ -486,6 +486,26 @@ def generate_resume(current_user_id):
         print(f"\n=== RESUME GENERATION STARTED ===")
         print(f"User ID: {current_user_id}")
         
+        # Import User model for credit operations
+        from models.user import User
+        
+        # Step 1: Fetch latest credits from MongoDB (NOT from memory/cache)
+        credit_info = User.get_current_credits(current_user_id)
+        if not credit_info:
+            return jsonify({
+                'error': 'User not found. Please log in again.'
+            }), 404
+        
+        available_credits = credit_info.get('credits', 0)
+        print(f"Available credits: {available_credits}")
+        
+        # Step 2: Check if user has sufficient credits
+        if available_credits < 1:
+            return jsonify({
+                'error': 'Insufficient credits. Please purchase more credits to generate resumes.',
+                'credits_available': available_credits
+            }), 402  # Payment Required
+        
         # Check if user has extracted data in storage
         if current_user_id not in extracted_data_storage:
             return jsonify({
@@ -504,17 +524,28 @@ def generate_resume(current_user_id):
         request_data = request.get_json() if request.is_json else {}
         job_description = request_data.get('job_description', user_data.get('job_description', ''))
         
-        # Get AWS API URL from config
+        # Get AWS API URL from environment config (NOT hardcoded)
         aws_api_url = Config.AWS_RESUME_API
-        if not aws_api_url or aws_api_url == "Actual API: https://c81hlh2we4.execute-api.ap-south-1.amazonaws.com/ProductionEasyJobsResumeGeneratorStageOne/ProductionEasyJobsResumeGeneratorResource":
-            # Extract the actual URL
-            aws_api_url = "https://c81hlh2we4.execute-api.ap-south-1.amazonaws.com/ProductionEasyJobsResumeGeneratorStageOne/ProductionEasyJobsResumeGeneratorResource"
+        if not aws_api_url:
+            print("ERROR: AWS_RESUME_API not configured in environment")
+            return jsonify({
+                'error': 'Resume generation service is not configured. Please contact support.'
+            }), 500
         
         print(f"Using AWS API: {aws_api_url}")
         print(f"Resume text length: {len(resume_text)} characters")
         print(f"Job description length: {len(job_description) if job_description else 0} characters")
         
-        # Send to AWS API
+        # Step 3: DEDUCT CREDIT NOW (when API is about to be hit)
+        deduction_success = User.deduct_credits(current_user_id, 1)
+        if not deduction_success:
+            return jsonify({
+                'error': 'Failed to deduct credits. Please try again.',
+                'credits_available': available_credits
+            }), 500
+        print(f"[OK] Credit deducted before API call")
+        
+        # Step 4: Send to AWS API
         try:
             base64_pdf_data = send_to_aws_api(resume_text, job_description, aws_api_url)
             
@@ -527,7 +558,11 @@ def generate_resume(current_user_id):
                 pdf_bytes = base64.b64decode(base64_pdf_data)
                 pdf_size_kb = len(pdf_bytes) / 1024
                 
-                print(f"✓ Generated PDF size: {pdf_size_kb:.2f} KB")
+                print(f"[OK] Generated PDF size: {pdf_size_kb:.2f} KB")
+                
+                # Step 5: API SUCCESS - Increment resumes_generated counter
+                User.increment_resumes_generated(current_user_id)
+                print(f"[OK] resumes_generated incremented")
                 
                 # Save resume to database
                 resume = Resume(
@@ -540,9 +575,12 @@ def generate_resume(current_user_id):
                 )
                 
                 resume_id = resume.save()
-                print(f"💾 Resume saved to database with ID: {resume_id}")
+                print(f" Resume saved to database with ID: {resume_id}")
                 
-                # Return success response with resume ID
+                # Fetch updated credit info
+                updated_credits = User.get_current_credits(current_user_id)
+                
+                # Return success response with resume ID and updated credits
                 return jsonify({
                     'success': True,
                     'message': 'Resume generated successfully',
@@ -553,7 +591,10 @@ def generate_resume(current_user_id):
                         'resume_text_length': len(resume_text),
                         'job_description_length': len(job_description) if job_description else 0,
                         'generation_timestamp': datetime.now().isoformat(),
-                        'original_filename': user_data.get('file_info', {}).get('filename', 'unknown.pdf')
+                        'original_filename': user_data.get('file_info', {}).get('filename', 'unknown.pdf'),
+                        'credits_remaining': updated_credits.get('credits', 0) if updated_credits else 0,
+                        'credits_used': updated_credits.get('credits_used', 0) if updated_credits else 0,
+                        'resumes_generated': updated_credits.get('resumes_generated', 0) if updated_credits else 0
                     }
                 }), 200
                 
@@ -561,7 +602,9 @@ def generate_resume(current_user_id):
                 raise Exception("Invalid base64 data received from API")
                 
         except Exception as api_error:
+            # API FAILED - Credit already deducted, resumes_generated NOT incremented
             print(f"API Error: {str(api_error)}")
+            print("✗ Credit was deducted but API failed - resumes_generated NOT incremented")
             return jsonify({
                 'error': f'Resume generation failed: {str(api_error)}'
             }), 500
@@ -609,7 +652,7 @@ def download_resume(current_user_id, resume_id):
         timestamp = resume_doc['created_at'].strftime('%Y%m%d_%H%M%S')
         filename = f"optimized_resume_{timestamp}.pdf"
         
-        print(f"✓ Sending PDF download: {len(pdf_bytes)} bytes")
+        print(f"[OK] Sending PDF download: {len(pdf_bytes)} bytes")
         
         # Return PDF as download
         return Response(
@@ -643,7 +686,7 @@ def get_user_resumes(current_user_id):
         # Get user stats
         stats = Resume.get_user_stats(current_user_id)
         
-        print(f"✓ Found {len(resumes)} resumes for user")
+        print(f"[OK] Found {len(resumes)} resumes for user")
         
         return jsonify({
             'success': True,
@@ -689,7 +732,7 @@ def get_resume_details(current_user_id, resume_id):
             'last_downloaded': resume_doc.get('last_downloaded').isoformat() if resume_doc.get('last_downloaded') else None
         }
         
-        print(f"✓ Resume details fetched successfully")
+        print(f"[OK] Resume details fetched successfully")
         
         return jsonify({
             'success': True,

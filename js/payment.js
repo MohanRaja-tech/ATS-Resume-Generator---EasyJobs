@@ -5,7 +5,7 @@
 function checkAuth() {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const authToken = localStorage.getItem('authToken');
-    
+
     if (!isLoggedIn || isLoggedIn !== 'true' || !authToken) {
         window.location.href = 'index.html';
         return;
@@ -50,19 +50,19 @@ function selectPlan(planName, credits, amount) {
         credits: credits,
         amount: amount
     };
-    
+
     // Update payment section
     document.getElementById('selectedPlan').textContent = selectedPlanData.name;
     document.getElementById('selectedCredits').textContent = `${selectedPlanData.credits} Credits`;
     document.getElementById('totalAmount').textContent = selectedPlanData.amount;
     document.getElementById('payAmount').textContent = selectedPlanData.amount;
-    
+
     // Show payment section
     document.getElementById('paymentSection').style.display = 'block';
-    
+
     // Scroll to payment section
     document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
-    
+
     showAlert(`${selectedPlanData.name} plan selected! Complete payment below.`, 'info');
 }
 
@@ -109,37 +109,37 @@ const paymentForm = document.getElementById('paymentForm');
 if (paymentForm) {
     paymentForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         if (!selectedPlanData) {
             showAlert('Please select a plan first', 'error');
             return;
         }
-        
+
         // Get form data
         const cardName = document.getElementById('cardName').value.trim();
         const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
         const expiryDate = document.getElementById('expiryDate').value;
         const cvv = document.getElementById('cvv').value;
-        
+
         // Basic validation
         if (cardNumber.length !== 16) {
             showAlert('Invalid card number', 'error');
             return;
         }
-        
+
         if (cvv.length !== 3) {
             showAlert('Invalid CVV', 'error');
             return;
         }
-        
+
         if (!expiryDate.match(/^\d{2}\/\d{2}$/)) {
             showAlert('Invalid expiry date format', 'error');
             return;
         }
-        
+
         // Show loading
         toggleLoading(true);
-        
+
         // Simulate payment processing (Replace with actual Razorpay integration)
         // In real implementation, you would initialize Razorpay here
         /*
@@ -164,7 +164,7 @@ if (paymentForm) {
         const rzp = new Razorpay(options);
         rzp.open();
         */
-        
+
         // Simulate successful payment after 2 seconds
         setTimeout(() => {
             processSuccessfulPayment('DEMO_' + Date.now());
@@ -173,40 +173,81 @@ if (paymentForm) {
 }
 
 // Process successful payment
-function processSuccessfulPayment(paymentId) {
-    // Update user data
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    userData.credits = (userData.credits || 0) + selectedPlanData.credits;
-    userData.creditsPurchased = (userData.creditsPurchased || 0) + selectedPlanData.credits;
-    localStorage.setItem('userData', JSON.stringify(userData));
-    
-    // Add transaction to history
-    const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
-    const newTransaction = {
-        id: paymentId,
-        date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-        type: `${selectedPlanData.name} Plan Purchase`,
-        credits: `+${selectedPlanData.credits}`,
-        amount: `₹${selectedPlanData.amount}.00`,
-        status: 'Completed'
-    };
-    transactions.unshift(newTransaction);
-    localStorage.setItem('transactions', JSON.stringify(transactions));
-    
-    toggleLoading(false);
-    
-    // Show success modal
-    document.getElementById('creditsAdded').textContent = selectedPlanData.credits;
-    const modal = document.getElementById('successModal');
-    modal.classList.add('show');
-    
-    // Update current credits display
-    loadUserData();
-    
-    // Reset form and hide payment section
-    paymentForm.reset();
-    document.getElementById('paymentSection').style.display = 'none';
-    selectedPlanData = null;
+async function processSuccessfulPayment(paymentId) {
+    try {
+        const authToken = localStorage.getItem('authToken');
+
+        if (!authToken) {
+            showAlert('Authentication error. Please log in again.', 'error');
+            toggleLoading(false);
+            window.location.href = 'index.html';
+            return;
+        }
+
+        // Call backend API to add credits to MongoDB
+        const response = await fetch('/api/payment/add-credits', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({
+                amount: selectedPlanData.credits,
+                transaction_id: paymentId,
+                price: selectedPlanData.amount
+            })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            // Update localStorage with fresh data from MongoDB
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            userData.credits = result.data.credits_available;
+            userData.creditsPurchased = result.data.credits_purchased;
+            userData.creditsUsed = result.data.credits_used;
+            localStorage.setItem('userData', JSON.stringify(userData));
+
+            // Add transaction to local history
+            const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+            const newTransaction = {
+                id: paymentId,
+                date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+                type: `${selectedPlanData.name} Plan Purchase`,
+                credits: `+${selectedPlanData.credits}`,
+                amount: `₹${selectedPlanData.amount}.00`,
+                status: 'Completed'
+            };
+            transactions.unshift(newTransaction);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+
+            toggleLoading(false);
+
+            // Show success modal
+            document.getElementById('creditsAdded').textContent = selectedPlanData.credits;
+            const modal = document.getElementById('successModal');
+            modal.classList.add('show');
+
+            // Update current credits display
+            loadUserData();
+
+            // Reset form and hide payment section
+            paymentForm.reset();
+            document.getElementById('paymentSection').style.display = 'none';
+            selectedPlanData = null;
+
+            console.log(`✓ Added ${result.data.credits_added} credits. New balance: ${result.data.credits_available}`);
+        } else {
+            // API call failed
+            toggleLoading(false);
+            showAlert(result.error || 'Failed to add credits. Please contact support.', 'error');
+            console.error('Failed to add credits:', result);
+        }
+    } catch (error) {
+        console.error('Payment processing error:', error);
+        toggleLoading(false);
+        showAlert('An error occurred while processing your payment. Please contact support.', 'error');
+    }
 }
 
 // Go to dashboard

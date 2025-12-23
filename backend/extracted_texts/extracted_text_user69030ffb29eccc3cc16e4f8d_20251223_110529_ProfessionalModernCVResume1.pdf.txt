@@ -1,0 +1,73 @@
+EXTRACTED RESUME TEXT
+==================================================
+Original Filename: Professional Modern CV Resume (1).pdf
+User ID: 69030ffb29eccc3cc16e4f8d
+Extraction Timestamp: 2025-12-23 11:05:29
+==================================================
+
+RESUME TEXT:
+------------------------------
+IYYAPPAN R
+B.TECH IT
++91 90438 98589 iyyappan10-portfolio.vercel.app
+iyyappan281105@gmail.com github.com/IYYAPPAN10R
+linkedin.com/in/iyyappan--r/ leetcode.com/u/IYYAPPAN--R/
+EDUCATION PROFILE
+KONGU ENGINEERING COLLEGE 2023 - 2027 Enthusiastic learner with technical skills in software development, keen to
+CGPA 8.48* apply knowledge to real-world challenges. Adaptable and collaborative,
+SAKTHI SCHOOL 2022 - 2023 focused on contributing to meaningful projects and continuous growth.
+HSC 88%
+PROJECTS
+SAKTHI SCHOOL 2020 - 2021
+SSLC
+College Bus Management System July2025 - Aug 2025
+SKILLS Developed a system to manage bus routes, schedules, and student
+registrations efficiently.
+Languages : Java , C , C++.
+Enabled real-time tracking and streamlined fee/payment management
+Frontend : React.JS for students and admins.
+Technology : MERN
+Backend : Node.JS
+Travel Bill Splitter Feb 2025 - May 2025
+Database : MongoDB , MySQL
+Built a platform to split group travel expenses fairly among participants.
+Version Control : Git , Github
+Included features for expense tracking, balance settlement, and user-
+friendly UI.
+AREA OF INTEREST
+Technology : MERN
+Object-Oriented Programming
+Online Learning Platform Nov 2024 - Jan 2025
+Database Management Systems Designed a learning platform with course enrollment, video lectures,
+and quizzes.
+Computer Organization
+Implemented role-based access for students and instructors with
+Computer Networks smooth navigation.
+Technology : MERN
+ACHIEVEMENTS
+CERTIFICATIONS
+Introduction to Cloud Computing : Coursera(IBM) Nov 2024
+Secured 84 percentile in JEE
+Oracle APEX Cloud Developer Certified Professional June 2025
+Mains (2023 Exam).
+SOFT SKILLS
+Second Prize in Hackathon at
+Team Collaboration
+SNS College of Technology for
+Time Management
+the project "Object Detection
+Problem-Solving
+using AI"
+Creativity
+Solved 250+ problems on
+LeetCode focusing on DSA and
+problem-solving.
+
+==================================================
+JOB DESCRIPTION:
+------------------------------
+MERN Stack Developer
+
+==================================================
+Extraction completed successfully!
+Total characters extracted: 1907

@@ -38,7 +38,7 @@ class Resume:
         try:
             db = Database.get_db()
             if db is None:
-                print("⚠️ Database not available - resume not saved to database")
+                print("[WARNING] Database not available - resume not saved to database")
                 return None
                 
             resume_data = self.to_dict()

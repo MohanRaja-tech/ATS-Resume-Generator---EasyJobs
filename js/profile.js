@@ -13,22 +13,22 @@ function safeUpdateElement(elementId, value) {
 
 // Initialize user data on page load
 function initializeUserData() {
-    // Set demo data if not exists (for migration from old system)
+    // Initialize empty userData if not exists (actual data will be fetched from API)
     if (!localStorage.getItem('userData')) {
-        const demoUserData = {
-            email: 'demo@easyjobs.com',
-            name: 'Demo User',
-            credits: 5,
-            resumesGenerated: 0,
-            creditsUsed: 0,
-            creditsPurchased: 5,
-            credits_purchased: 5,
-            credits_used: 0,
-            resumes_generated: 0,
-            memberSince: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-            member_since: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+        const emptyUserData = {
+            email: '',
+            name: 'User',
+            credits: null,
+            resumesGenerated: null,
+            creditsUsed: null,
+            creditsPurchased: null,
+            credits_purchased: null,
+            credits_used: null,
+            resumes_generated: null,
+            memberSince: '',
+            member_since: ''
         };
-        localStorage.setItem('userData', JSON.stringify(demoUserData));
+        localStorage.setItem('userData', JSON.stringify(emptyUserData));
     }
 
     // Set auth flags if not exists

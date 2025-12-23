@@ -30,6 +30,7 @@ def validate_signup_data(data):
 def validate_login_data(data):
     """Validate login request data"""
     errors = []
+
     
     if not data.get('email'):
         errors.append('Email is required')

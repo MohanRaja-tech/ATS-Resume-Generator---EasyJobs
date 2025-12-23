@@ -79,16 +79,19 @@ def get_profile(current_user_id):
                 }
             }), 200
         
+        # Fetch fresh credit data from MongoDB (not cached)
+        credit_info = User.get_current_credits(current_user_id)
+        
         # Get user resume statistics
         resume_stats = Resume.get_user_stats(current_user_id)
         
         profile_data = {
             'email': user.get('email', 'demo@example.com'),
             'name': user.get('name', 'Demo User'),
-            'credits': user.get('credits', 3),
-            'credits_purchased': user.get('credits_purchased', 3),
-            'credits_used': user.get('credits_used', 0),
-            'resumes_generated': resume_stats.get('total_resumes', 0),
+            'credits': credit_info.get('credits', 0) if credit_info else user.get('credits', 3),
+            'credits_purchased': credit_info.get('credits_purchased', 0) if credit_info else user.get('credits_purchased', 3),
+            'credits_used': credit_info.get('credits_used', 0) if credit_info else user.get('credits_used', 0),
+            'resumes_generated': credit_info.get('resumes_generated', 0) if credit_info else resume_stats.get('total_resumes', 0),
             'created_at': user.get('created_at')
         }
         

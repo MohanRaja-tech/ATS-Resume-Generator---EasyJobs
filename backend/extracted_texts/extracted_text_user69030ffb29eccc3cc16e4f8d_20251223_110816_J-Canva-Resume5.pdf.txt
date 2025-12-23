@@ -1,0 +1,81 @@
+EXTRACTED RESUME TEXT
+==================================================
+Original Filename: J-Canva-Resume (5).pdf
+User ID: 69030ffb29eccc3cc16e4f8d
+Extraction Timestamp: 2025-12-23 11:08:16
+==================================================
+
+RESUME TEXT:
+------------------------------
+JEGAN J B
+ASPIRING SOFTWARE ENGINEER | FULL STACK DEVELOPER (MERN)
+📍 ERODE, TAMIL NADU, INDIA | 📧 JEGANJB27@GMAIL.COM | +91 88831 39860
+🔗 LinkedIn: www.linkedin.com/in/jeganjb2006 | GitHub: github.com/JEGAN37
+Portfolio: https://pf-anti.vercel.app/
+OBJECTIVE EDUCATION
+Passionate IT student interested in solving real-world problems Bachelor of Technology in Information Technology
+through technology. Skilled in full-stack development, DSA, and Kongu Engineering College, Tamil Nadu | CGPA: 7.47*
+modern tools to build scalable, impactful solutions. Higher Secondary
+SMBM HR Sec School, Dindigul | 2023 | 86.83%
+PROJECTS
+NOV 2024 - FEB 2025
+Debt and Loan Management System TECHNICAL SKILLS
+Role: Frontend Developer | Reduced loan tracking errors
+Languages: Java,C
+by 70%
+Front-End: HTML, CSS, JavaScript, Bootstrap, React.js
+Developed a React-based frontend integrated with REST
+APIs and a MongoDB backend, implementing secure Back-End: Node.js,Express.js
+authentication, real-time data handling Database: MySQL, MongoDB
+MAR 2025 - JUL 2025 Tools & Technologies: Git, GitHub, Agile, Docker
+Decentralized Voting System
+Role: Blockchain Developer | Impact: Increased voting
+transparency and integrity
+Developed Solidity smart contracts and integrated AREA OF INTEREST
+Web3.js with React for real-time voting
+Data Structures
+Ensured secure, immutable, and auditable transactions
+Database management system
+AUG 2025 - OCT 2025
+Object-Oriented Programming (OOP) .
+E-Commerce Website
+Role: Web Developer | Impact: Enhanced user navigation
+and retention CERTIFICATIONS
+Built a responsive, component-based UI using React.js and
+Advanced Diploma in Computer Programming
+Bootstrap, improving user navigation and retention.
+Integrated RESTful APIs for product order management, (ADCP) – May 2023
+implementing secure authentication . Diploma in Web Development (DWD) – Jul 2023
+Oracle APEX Cloud Developer – Jun 2025
+OCT 2025 - NOV 2025
+CBT Companion web app
+Role: AI & Web Developer | Impact: Enabled 24/7 user
+self-reflection through NLP SOFT SKILLS
+Developed an AI-powered web application with NLP-based
+Problem Solving
+emotion recognition and Chart.js visualizations.
+Analytical Thinking
+Designed a mobile-first UI with journaling features and
+integrated CBT-based suggestions with feedback tracking Collaboration
+to enhance user engagement.
+Adaptability
+NOV 2025 - PRESENT Critical Thinking
+AI-Powered Driver Drowsiness Detection
+Time Management
+Role: AI Developer | Impact: Improved driver safety by
+detecting drowsiness in real-time
+ACHIEVEMENTS
+Built a deep learning model for facial feature monitoring
+and eye-blink detection Won 1st price in Hackathon at KEC(Exodia)
+Integrated alert system with audio notifications to prevent Participated in Hackathon at KSR college of Engineerring
+accidents Participated in Hackathon at Velammal insititue of
+Technology
+
+==================================================
+JOB DESCRIPTION:
+------------------------------
+
+
+==================================================
+Extraction completed successfully!
+Total characters extracted: 2853
